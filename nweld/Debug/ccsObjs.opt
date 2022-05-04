@@ -1,0 +1,1 @@
+"./DSP281x_CpuTimers.obj" "./DSP281x_DefaultIsr.obj" "./DSP281x_GlobalVariableDefs.obj" "./DSP281x_PieCtrl.obj" "./DSP281x_PieVect.obj" "./DSP281x_SysCtrl.obj" "./DSP281x_usDelay.obj" "./Ev.obj" "./Gpio.obj" "./Sci.obj" "./Spi.obj" "./adc.obj" "./dac.obj" "./lstate.obj" "./main.obj" "./timer.obj" "./OLED/oled.obj" "./OLED/weld_oled.obj" "../ram.cmd" -llibc.a 
