@@ -9,6 +9,7 @@ to be work standalone.
 import math
 # import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 class Generate():
     def  __init__(self, number):
@@ -22,6 +23,7 @@ class Generate():
         for i in i_position:
             location = (center-i)*(center-i)
             self.bright[i] = peak*math.exp(-location/(half_width*half_width))
+            self.bright[i] = self.bright[i] + random.random()*0.05*peak
         
         # print(self.bright)
         
@@ -31,7 +33,8 @@ class Generate():
         f.close()
     
     def plot_out(self):
-        plt.plot(self.bright)
+        i_position = list(range(0, self.number))
+        plt.scatter(i_position, self.bright, s=1)
         plt.show()
 
 
@@ -42,5 +45,5 @@ class Generate():
 if __name__ == '__main__':
     it_generate = Generate(300)
     it_generate.gaussian(peak=700, center=150, half_width=50)
-    # it_generate.outfile()
+    it_generate.outfile()
     it_generate.plot_out()
