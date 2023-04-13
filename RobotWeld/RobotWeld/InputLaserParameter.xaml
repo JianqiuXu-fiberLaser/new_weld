@@ -1,0 +1,223 @@
+﻿<Window x:Class="RobotWeld.InputLaserParameter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RobotWeld"
+        xmlns:vm="clr-namespace:RobotWeld.ViewModel"
+        mc:Ignorable="d"
+        Title="自定义激光参数" Height="460" Width="800" ResizeMode="NoResize"
+        Icon="/Images/sunflower.ico">
+
+    <Window.DataContext>
+        <vm:InputLaserParameterViewModel />
+    </Window.DataContext>
+    <!-- Grid configuration -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="42" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="42" />
+            <RowDefinition Height="42" />
+        </Grid.RowDefinitions>
+
+        <!-- the frequency property -->
+        <Canvas Grid.Row="0">
+            <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" />
+            <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="100"/>
+            <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="200"/>
+            <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="300"/>
+            <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="50" Canvas.Bottom="60" />
+            <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="150" Canvas.Bottom="60" />
+            <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="250" Canvas.Bottom="60" />
+            <Line Stroke="RoyalBlue" StrokeThickness="1" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" />
+            <Line Stroke="RoyalBlue" StrokeThickness="1" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" Canvas.Left="50"/>
+            <Line Stroke="RoyalBlue" StrokeThickness="1" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" Canvas.Left="100"/>
+            <Line Stroke="RoyalBlue" StrokeThickness="1" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" Canvas.Left="150"/>
+            <Line Stroke="RoyalBlue" StrokeThickness="1" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" Canvas.Left="200"/>
+            <Line Stroke="RoyalBlue" StrokeThickness="1" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" Canvas.Left="250"/>
+        </Canvas>
+
+        <!-- illustration -->
+        <Canvas Grid.Row="1">
+            <Label Content="频率" Canvas.Left="180" Canvas.Top="10"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="Frequency" Canvas.Left="215" Canvas.Top="7"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     GotFocus="Frequency_GotFocus" 
+                     PreviewMouseLeftButtonDown="Frequency_PreviewMouseLeftButtonDown" 
+                     Text="{Binding Path=LaserFrequecy}"/>
+            <Label Content="脉宽" Canvas.Left="300" Canvas.Top="10"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="PulseWidth" Canvas.Left="335" Canvas.Top="7"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     GotFocus="PulseWidth_GotFocus" 
+                     PreviewMouseLeftButtonDown="PulseWidth_PreviewMouseLeftButtonDown"
+                     Text="{Binding Path=LaserDutyCycle}"/>
+            <Label Content="占空比" Canvas.Left="430" Canvas.Top="10"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="DutyCycle" Canvas.Left="475" Canvas.Top="7"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     GotFocus="DutyCycle_GotFocus" 
+                     PreviewMouseLeftButtonDown="DutyCycle_PreviewMouseLeftButtonDown" 
+                     Text="{Binding Path=LaserDutyCycle}"/>
+
+        </Canvas>
+
+        <!-- Graphic of laser parameters -->
+        <Canvas Grid.Row="2">
+            <Label Content="功率" Canvas.Left="310" Canvas.Top="40"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="LaserPower" Canvas.Left="350" Canvas.Top="37"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"             
+                     GotFocus="LaserPower_GotFocus" 
+                     PreviewMouseLeftButtonDown="LaserPower_PreviewMouseLeftButtonDown"                    
+                     Text="{Binding Path=LaserPower}"/>
+
+            <!-- the power curve -->
+            <Line Stroke="MidnightBlue" StrokeThickness="2" StrokeDashArray="2,1"
+                  X1="135" Y1="145"
+                  X2="210" Y2="145" />
+            <Line Stroke="MidnightBlue" StrokeThickness="2"
+                  X1="210" Y1="145"
+                  X2="285" Y2="75" />
+            <Line Stroke="MidnightBlue" StrokeThickness="2"
+                  X1="285" Y1="75"
+                  X2="510" Y2="75" />
+            <Line Stroke="MidnightBlue" StrokeThickness="2"
+                  X1="510" Y1="75"
+                  X2="585" Y2="145" />
+            <Line Stroke="MidnightBlue" StrokeThickness="2" StrokeDashArray="2,1"
+                  X1="135" Y1="145"
+                  X2="210" Y2="145" Canvas.Left="450" />
+            <Line Stroke="DimGray" StrokeThickness="1" StrokeDashArray="5,2"
+                  X1="285" Y1="145"
+                  X2="285" Y2="75" />
+            <Line Stroke="DimGray" StrokeThickness="1" StrokeDashArray="5,2"
+                  X1="480" Y1="145"
+                  X2="480" Y2="75" />
+            <Line Stroke="DimGray" StrokeThickness="1" StrokeDashArray="5,2"
+                  X1="510" Y1="145"
+                  X2="510" Y2="75" />
+            <!-- laser details -->
+            <Label Content="吹气" Canvas.Left="140" Canvas.Top="150"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="AirIn" Canvas.Left="120" Canvas.Top="175"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     GotFocus="AirIn_GotFocus" 
+                     PreviewMouseLeftButtonDown="AirIn_PreviewMouseLeftButtonDown"
+                     Text="{Binding Path=AirIn}"/>
+            <Label Content="上升沿" Canvas.Left="220" Canvas.Top="150"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="LaserRise" Canvas.Left="210" Canvas.Top="175"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"                     
+                     GotFocus="LaserRise_GotFocus" 
+                     PreviewMouseLeftButtonDown="LaserRise_PreviewMouseLeftButtonDown"                     
+                     Text="{Binding Path=LaserRise}"/>
+            <Label Content="持续时间" Canvas.Left="350" Canvas.Top="150"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="LaserHoldtime" Canvas.Left="340" Canvas.Top="175"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     GotFocus="LaserHoldtime_GotFocus" 
+                     PreviewMouseLeftButtonDown="LaserHoldtime_PreviewMouseLeftButtonDown" 
+                     Text="{Binding Path=LaserHoldtime}"/>
+            <Label Content="断丝延迟" Canvas.Left="452" Canvas.Top="150"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="WireTime" Canvas.Left="445" Canvas.Top="175"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"           
+                     GotFocus="WireTime_GotFocus" 
+                     PreviewMouseLeftButtonDown="WireTime_PreviewMouseLeftButtonDown"                   
+                     Text="{Binding Path=WireTime}"/>
+            <Label Content="下降沿" Canvas.Left="535" Canvas.Top="150"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="LaserFall" Canvas.Left="525" Canvas.Top="175"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"        
+                     GotFocus="LaserFall_GotFocus" 
+                     PreviewMouseLeftButtonDown="LaserFall_PreviewMouseLeftButtonDown"                   
+                     Text="{Binding Path=LaserFall}"/>
+            <Label Content="关气" Canvas.Left="615" Canvas.Top="150"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="AirOut" Canvas.Left="605" Canvas.Top="175"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"               
+                     GotFocus="AirOut_GotFocus" 
+                     PreviewMouseLeftButtonDown="AirOut_PreviewMouseLeftButtonDown"  
+                     Text="{Binding Path=AirOut}"/>
+        </Canvas>
+
+        <!-- illustration of weldding parameters -->
+        <Canvas Grid.Row="3">
+            <Label Content="焊接速度" Canvas.Left="240" Canvas.Top="10"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="WeldSpeed" Canvas.Left="300" Canvas.Top="7"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"    
+                     GotFocus="WeldSpeed_GotFocus" 
+                     PreviewMouseLeftButtonDown="WeldSpeed_PreviewMouseLeftButtonDown"  
+                     Text="{Binding Path=WeldSpeed}"/>
+            <Label Content="摆动频率" Canvas.Left="380" Canvas.Top="10"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="WobbleSpeed" Canvas.Left="440" Canvas.Top="7"
+                     Padding="0,6,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     GotFocus="WobbleSpeed_GotFocus" 
+                     PreviewMouseLeftButtonDown="WobbleSpeed_PreviewMouseLeftButtonDown" 
+                     Text="{Binding Path=WobbleSpeed}"/>
+        </Canvas>
+
+        <!-- button -->
+        <Canvas Grid.Row="4">
+            <Button Content="_Ok" Canvas.Right="12" Canvas.Bottom="10" Width="75"
+                    Click="OkButton_Click" />
+        </Canvas>
+        
+    </Grid>
+</Window>

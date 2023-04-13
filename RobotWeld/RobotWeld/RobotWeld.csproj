@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Welding\MaterialTypePair.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\curve.png" />
+    <None Remove="Images\decode.png" />
+    <None Remove="Images\downarrow.png" />
+    <None Remove="Images\DXF.png" />
+    <None Remove="Images\floppydisk.png" />
+    <None Remove="Images\greenx.png" />
+    <None Remove="Images\hand.png" />
+	<None Remove="Images\logoxll.png" />
+	<None Remove="Images\param.png" />
+	<None Remove="Images\question.png" />
+	<None Remove="Images\sunflower.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\curve.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\decode.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\downarrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\DXF.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\floppydisk.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\greenx.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\hand.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\logoxll.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\param.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\question.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\sunflower.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Detection\" />
+	<Folder Include="GetTrace" />
+	<Folder Include="LaserOperation\" />
+    <Folder Include="SeekTrace\" />
+    <Folder Include="TracePlanning\" />
+    <Folder Include="Vision\" />
+	<Folder Include="Welding\" />
+  </ItemGroup>
+
+</Project>
