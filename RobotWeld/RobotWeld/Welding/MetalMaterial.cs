@@ -12,7 +12,12 @@
         private double _weldSpeed = 0;
         private double _wobbleSpeed = 0;
 
-        public MetalMaterial() { }
+        public MetalMaterial() 
+        { 
+            _materialType = 0;
+            _sheetThickness = 0;
+            _wireDiameter = 0;
+        }
 
         public int MaterialType
         {
@@ -21,10 +26,16 @@
         }
 
         public double Thickness
-        { get { return _sheetThickness; } set { _sheetThickness = value; } }
+        { 
+            get { return _sheetThickness; } 
+            set { _sheetThickness = value; }
+        }
 
         public double WireDiameter
-        { get { return _wireDiameter; } set { _wireDiameter = value; } }
+        { 
+            get { return _wireDiameter; } 
+            set { _wireDiameter = value; } 
+        }
 
         public double WeldSpeed
         {

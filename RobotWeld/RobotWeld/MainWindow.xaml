@@ -6,13 +6,8 @@
         xmlns:vm="clr-namespace:RobotWeld.ViewModel"
         mc:Ignorable="d"
         Title="FlowerWeld" WindowState="Maximized" MinHeight="400" MinWidth="800"
-        Icon="/Images/sunflower.ico" Loaded="MainWindow_Load" >
-
-    <!-- Data binding -->
-    <Window.DataContext>
-        <vm:ParameterViewModel />
-    </Window.DataContext>
-
+        Icon="/Images/sunflower.ico" Loaded="MainWindow_Load" Closing="WindowClose_Click" >
+    
     <!-- Resource binding -->
     <Window.Resources>
         <TextBlock x:Key="str_btn1" Text="激光关" />
@@ -72,7 +67,11 @@
                   Background="#EEEEF2">
                 <MenuItem Header="文件" Width="50">
                     <MenuItem Header="新建(_N)" Width="200" Command="New"/>
-                    <MenuItem Header="打开(_O)" Width="200" Command="Open"/>
+                    <MenuItem Header="打开(_O)" Width="200" Command="Open">
+                        <MenuItem.Icon>
+                            <Image Source="Images/open.png" Width="20" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="导入" Width="200" 
                               Command="vm:ParameterViewModel.ImportCommand" >
                         <MenuItem.Icon>
@@ -156,6 +155,11 @@
 
                 <!-- processing conditions -->
             <Canvas Grid.Row="0" Margin="0,0,0,0" >
+                <!-- Data binding -->
+                <Canvas.DataContext>
+                    <vm:ParameterViewModel />
+                </Canvas.DataContext>
+                
                 <StackPanel Canvas.Right="5" Canvas.Top="5" 
                             Width="75" Height="88"
                             Orientation="Vertical" VerticalAlignment="Top">
@@ -205,7 +209,12 @@
                 <ColumnDefinition Width="252"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-
+            
+            <!-- Data binding -->
+            <Grid.DataContext>
+                <vm:ParameterViewModel />
+            </Grid.DataContext>
+            
             <!-- info of coordinate -->
             <StackPanel Grid.Column="0" 
                         Orientation="Horizontal"
@@ -239,7 +248,7 @@
                            FontSize="14" Padding="0"/>
             </StackPanel>
 
-            <!-- Alarm light -->
+            <!-- Alarm light, Todo: change the color -->
             <Canvas Grid.Column="1" Margin="0,0,0,0" Height="22">
                 <Label Canvas.Right="20" Canvas.Top="0" 
                        Height="22" Padding="0">
@@ -250,9 +259,13 @@
             </Canvas>
         </Grid>
 
+        <!-- work information prompting -->
         <Canvas Grid.Row="1" Grid.Column="1" 
                 Margin="5,5,5,5" Height="Auto"
                 Background="Black" >
+            <Canvas.DataContext>
+                <vm:ParameterViewModel />
+            </Canvas.DataContext>
             <TextBlock Canvas.Right="5" Canvas.Top="5" 
                        Foreground="White" 
                        Width="100" Height="60" 

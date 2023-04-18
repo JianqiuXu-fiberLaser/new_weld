@@ -1,9 +1,3 @@
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\RobotWeld.csproj.AssemblyReference.cache
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\MainWindow.g.cs
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\App.g.cs
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\RobotWeld_MarkupCompile.cache
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\RobotWeld_MarkupCompile.lref
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\RobotWeld.exe
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\Images\curve.png
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\Images\decode.png
@@ -13,6 +7,7 @@ C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\Images\
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\Images\greenx.png
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\Images\hand.png
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\Images\logoxll.png
+C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\Images\open.png
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\Images\param.png
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\Images\question.png
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\Images\sunflower.ico
@@ -20,10 +15,16 @@ C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\RobotWe
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\RobotWeld.runtimeconfig.json
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\RobotWeld.dll
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\bin\Debug\net6.0-windows\RobotWeld.pdb
+C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\RobotWeld.csproj.AssemblyReference.cache
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\About.g.cs
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\InputLaserParameter.g.cs
+C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\MainWindow.g.cs
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\SelectMaterial.g.cs
+C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\App.g.cs
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\RobotWeld_Content.g.cs
+C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\RobotWeld_MarkupCompile.cache
+C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\RobotWeld_MarkupCompile.lref
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\About.baml
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\InputLaserParameter.baml
 C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\Debug\net6.0-windows\MainWindow.baml

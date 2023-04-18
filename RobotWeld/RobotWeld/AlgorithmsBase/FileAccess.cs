@@ -1,9 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Win32;
+using System;
 using System.IO;
-using System.Security.Cryptography;
 using System.Xml;
-using RobotWeld.AlgorithmsBase;
 
 namespace RobotWeld.AlgorithmsBase
 {
@@ -20,26 +18,17 @@ namespace RobotWeld.AlgorithmsBase
         private int _fileCode = 0;
 
         private const string recFiles = "./weldingRecord.xml";
-        public XmlDocument doc;
+        public XmlDocument ? doc;
 
-        public WeldFileAccess()
-        {
-            _fileIndex = 0;
-            _workTime = 0;
-            _fileTrace = 0;
-            _fileMaterial = 0;
-            _fileLaser = 0;
-            _fileCode = 0;
-
-            doc = new XmlDocument();
-        }
+        public WeldFileAccess() { }
 
         // create new enginning project
         public void New()
         {
-            DateTime dateTime2020 = new DateTime(2020,1,1,0,0,0).ToLocalTime();
-            TimeSpan timespan = (DateTime.Now.ToLocalTime() - dateTime2020);
-            _fileIndex = timespan.Seconds;
+            DateTime dateTime2020 = new DateTime(2020,1,1,0,0,0);
+            DateTime DateNow = DateTime.Now;
+            TimeSpan timespan = (DateNow - dateTime2020);
+            _fileIndex = (int)timespan.TotalSeconds;
 
             _workTime = 0;
             _fileTrace = 0;
@@ -82,6 +71,9 @@ namespace RobotWeld.AlgorithmsBase
         {
             try
             {
+                // 增加搜索目录功率，如果有相同名称，就扩展文件
+                // 否则就建新文件
+
                 FileStream wfile = new FileStream("./Worktime/" +
                 _fileIndex.ToString() + ".wkt", FileMode.Create);
                 StreamWriter sw = new StreamWriter(wfile);
@@ -99,6 +91,7 @@ namespace RobotWeld.AlgorithmsBase
         // save the file information with the customer name
         private void Save(string filename)
         {
+            doc = new XmlDocument();
             doc.LoadXml("<Projects></Projects>");
             if (doc.DocumentElement == null) { return; }
 
@@ -116,11 +109,11 @@ namespace RobotWeld.AlgorithmsBase
                 XmlElement project = doc.CreateElement("project");
                 root.InsertAfter(project, root.FirstChild);
 
-                AddXmlElement(project, "fileinde", _fileIndex.ToString());
-                AddXmlElement(project, "trace", _fileTrace.ToString());
-                AddXmlElement(project, "material", _fileMaterial.ToString());
-                AddXmlElement(project, "laser", _fileLaser.ToString());
-                AddXmlElement(project, "code", _fileCode.ToString());
+                AddXmlElement(doc, project, "fileindex", _fileIndex.ToString());
+                AddXmlElement(doc, project, "trace", _fileTrace.ToString());
+                AddXmlElement(doc, project, "material", _fileMaterial.ToString());
+                AddXmlElement(doc, project, "laser", _fileLaser.ToString());
+                AddXmlElement(doc, project, "code", _fileCode.ToString());
 
                 doc.Save(filename);
             }
@@ -130,7 +123,8 @@ namespace RobotWeld.AlgorithmsBase
             }
         }
 
-        private void AddXmlElement(XmlElement em, string name, string fvalue)
+        private void AddXmlElement(XmlDocument doc, XmlElement em, 
+            string name, string fvalue)
         {
             XmlElement var = doc.CreateElement(name);
             var.InnerText = fvalue;
@@ -138,9 +132,9 @@ namespace RobotWeld.AlgorithmsBase
         }
 
         // save as using the dialog Box
-        public void SaveDialog()
+        public void SaveDialog(string filename)
         {   
-            //Save(filename);
+            Save(filename);
         }
 
         // save file before close the program.
@@ -153,37 +147,45 @@ namespace RobotWeld.AlgorithmsBase
         // get the file data from record file
         private void GetFileData(XmlNode em)
         {
-            if (RetrieveAttribute(em, "fileindex", ref _fileIndex))
+            if (!RetrieveAttribute(em, "fileindex", out _fileIndex))
             {
-                new Werr().WerrMessage("The record file has an error!");
+                new Werr().WerrMessage("Record file has an error!");
                 return;
             }
 
-            if (RetrieveAttribute(em, "trace", ref _fileTrace))
+            if (!RetrieveAttribute(em, "trace", out _fileTrace))
             {
-                new Werr().WerrMessage("The trace in the record file has an error!");
+                new Werr().WerrMessage("Trace in the record file has an error!");
                 return;
             }
 
-            if (RetrieveAttribute(em, "material", ref _fileMaterial))
+            if (!RetrieveAttribute(em, "material", out _fileMaterial))
             {
-                new Werr().WerrMessage("The material in the record file has an error!");
+                new Werr().WerrMessage("Material in the record file has an error!");
                 return;
             }
 
-            if (RetrieveAttribute(em, "laser", ref _fileLaser))
+            if (!RetrieveAttribute(em, "laser", out _fileLaser))
             {
-                new Werr().WerrMessage("The laser in the record file has an error!");
+                new Werr().WerrMessage("Laser in the record file has an error!");
+                return;
+            }
+
+            if (!RetrieveAttribute(em, "code", out _fileCode))
+            {
+                new Werr().WerrMessage("Laser in the record file has an error!");
                 return;
             }
         }
 
-        private bool RetrieveAttribute(XmlNode nd, string name, ref int fvalue)
+        private bool RetrieveAttribute(XmlNode nd, string name, out int fvalue)
         {
             bool rst;
             XmlNode? var = nd.SelectSingleNode(name);
             if (var != null)
-                rst = int.TryParse(nd.InnerText, out fvalue);
+            {
+                rst = int.TryParse(var.InnerText, out fvalue);
+            }
             else
             {
                 fvalue = -1;
@@ -196,10 +198,17 @@ namespace RobotWeld.AlgorithmsBase
         // load the record file at the start of the weldding system.
         public void WeldLoad()
         {
+            Open(recFiles);
+        }
+
+        // open the record file
+        public void Open(string filename)
+        { 
             XmlElement root;
             try
             {
-                doc.Load(recFiles);
+                doc = new XmlDocument();
+                doc.Load(filename);
                 if (doc.DocumentElement == null) { return; }
                 root = doc.DocumentElement;
             }
@@ -213,10 +222,10 @@ namespace RobotWeld.AlgorithmsBase
             if (em != null)
             {
                 this.GetFileData(em);
-            }
-            
+            }     
         }
 
+        //-- get and set properties --
         public int FileIndex
         { 
             get { return _fileIndex; }

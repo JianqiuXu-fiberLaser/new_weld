@@ -16,6 +16,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/greenx.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/hand.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/logoxll.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/open.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/param.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/question.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/sunflower.ico")]

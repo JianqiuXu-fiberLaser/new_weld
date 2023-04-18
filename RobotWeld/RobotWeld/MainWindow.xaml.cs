@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using RobotWeld.AlgorithmsBase;
 using RobotWeld.ViewModel;
 
 namespace RobotWeld
@@ -12,12 +11,13 @@ namespace RobotWeld
     /// </summary>
     public partial class MainWindow : Window
     {
-        public WeldFileAccess ? fileAccess;
+        public ParameterViewModel ? viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            fileAccess = new WeldFileAccess();
+            ParameterViewModel viewModel = new ParameterViewModel();
+
             this.Loaded += new RoutedEventHandler(MainWindow_Load);
         }
 
@@ -60,28 +60,30 @@ namespace RobotWeld
         {
             if (e.Command == ApplicationCommands.New)
             {
-                fileAccess ??= new(); 
-                fileAccess.New();
+                viewModel ??= new(); 
+                viewModel.New();
 
             }
             if (e.Command == ApplicationCommands.Close)
             {
-                fileAccess?.Close();
-                this.Close();
+                viewModel?.Close();
+                viewModel = null;
+                Close();
             }
             if (e.Command == ApplicationCommands.SaveAs)
             {
-                fileAccess?.SaveDialog();
+                viewModel ??= new();
+                viewModel?.SaveDialog();
             }
             if (e.Command == ApplicationCommands.Open)
             {
-                /*var fileAccess = new FileAccess();
-                fileAccess.Open();*/
+                viewModel ??= new();
+                viewModel?.Open();
             }
             if (e.Command == ParameterViewModel.DownloadCommand)
             {
-                fileAccess ??= new WeldFileAccess();
-                fileAccess.DownloadSave();
+                viewModel ??= new ParameterViewModel();
+                viewModel.DownloadSave();
 
             }
             if (e.Command == ParameterViewModel.ImportCommand)
@@ -90,7 +92,8 @@ namespace RobotWeld
             }
             if (e.Command == ParameterViewModel.PresetTraceCommand)
             {
-
+/*                var dialog = new ChoiceTraceTyep();
+                dialog.ShowDialog();*/
             }
             if (e.Command == ParameterViewModel.AutoTraceCommand)
             {
@@ -98,29 +101,26 @@ namespace RobotWeld
             }
             if (e.Command == ParameterViewModel.PresetParameterCommand)
             {
-                var dialog = new SelectMaterial();
-
-                if(fileAccess != null)
-                    dialog.MaterialIndex = fileAccess.FileMaterial;
-
-                dialog.ShowDialog();
+                viewModel?.SelectMaterialDialog();
             }
             if (e.Command == ParameterViewModel.UserParameterCommand)
             {
-                var dialog = new InputLaserParameter();
-                dialog.ShowDialog();
+/*                var dialog = new InputLaserParameter();
+                dialog.ShowDialog();*/
             }
             if (e.Command == ParameterViewModel.AutoParameterCommand)
             {
-                // TODO: give the weld parameter from calculation
+                // TODO:give the weld parameter from calculation
             }
             if (e.Command == ParameterViewModel.LaserDecodeCommand)
             {
-                // TODO: decode the laser expire date
+                // decode the laser expire date
+                //viewModel?.LaserDecode();
             }
             if (e.Command == ParameterViewModel.LaserVersionCommand)
             {
-                // TODO: show the laser factory information
+                // show the laser factory information
+                //viewModel?.ShowFactory();
             }
             if (e.Command == ParameterViewModel.GetHelpCommand)
             {
@@ -136,20 +136,27 @@ namespace RobotWeld
 
         private void LaserButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO:
+            //viewModel?.LaserButton();
         }
 
         private void LineButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO:
+            //viewModel?.LineButton();
         }
 
         private void MainWindow_Load(object sender, RoutedEventArgs e)
         {
             // the first loading of MainWindow
             // loads the record file and check the binary file in the motion Card
-            fileAccess ??= new();
-            fileAccess.WeldLoad();
+            viewModel ??= new();
+            viewModel.WeldLoad();
+        }
+
+        private void WindowClose_Click(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            viewModel?.Close();
+            viewModel = null;
+            e.Cancel = false;
         }
     }
 }

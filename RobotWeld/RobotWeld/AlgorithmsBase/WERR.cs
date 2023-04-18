@@ -20,5 +20,11 @@ namespace RobotWeld.AlgorithmsBase
             MessageBox.Show(msg, "Warning", MessageBoxButton.OK,
                 MessageBoxImage.Warning);
         }
+
+        public void TestMessage(string msg)
+        {
+            MessageBox.Show(msg, "Test", MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
     }
 }

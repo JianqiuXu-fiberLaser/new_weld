@@ -21,6 +21,7 @@
     <None Remove="Images\greenx.png" />
     <None Remove="Images\hand.png" />
 	<None Remove="Images\logoxll.png" />
+	<None Remove="Images\open.png" />
 	<None Remove="Images\param.png" />
 	<None Remove="Images\question.png" />
 	<None Remove="Images\sunflower.ico" />
@@ -49,6 +50,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\logoxll.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\open.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\param.png">

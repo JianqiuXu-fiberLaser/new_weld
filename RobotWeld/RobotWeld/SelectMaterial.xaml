@@ -3,23 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RobotWeld"
         xmlns:vm="clr-namespace:RobotWeld.ViewModel"
-        xmlns:wd="clr-namespace:RobotWeld.Weldding"
+        mc:Ignorable="d"
         Title="焊接参数" Height="320" Width="450" ResizeMode="NoResize"
         Icon="/Images/sunflower.ico">
-    <!-- Data and Command binding -->
-    <!-- Window.DataContext -->
-        <!-- vm:SelectMaterialViewModel -->
-    <!-- /Window.DataContext -->
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="62" />
             <RowDefinition Height="52" />
-            <RowDefinition Height="15" />
+            <RowDefinition Height="13" />
             <RowDefinition Height="52" />
-            <RowDefinition Height="15" />
+            <RowDefinition Height="13" />
             <RowDefinition Height="52" />
             <RowDefinition Height="*" />
             <RowDefinition Height="42" />
@@ -30,23 +25,19 @@
         </StackPanel>
 
         <Canvas Grid.Row="1">
-            <Canvas.Resources>
-                <wd:MaterialList x:Key="MaterialListData" />
-            </Canvas.Resources>
             <Label Content="焊接基材" Canvas.Left="130" Canvas.Top="10"
                    FontFamily="YaHei" FontSize="14"
                    HorizontalAlignment="Center"/>
             <ComboBox Name="WeldMaterial" Width="100" Height="28"
                       Canvas.Left="200" Canvas.Top="7" 
-                      FontFamily="YaHei" FontSize="14"
-                      Padding="5,7,0,0"
-                      ItemsSource="{Binding Source={StaticResource MaterialListData}}" 
-                      DisplayMemberPath="Name" 
-                      SelectedValuePath="MaterialType" 
-                      SelectedIndex="0" />
+                      FontFamily="YaHei" FontSize="14" Padding="5,7,0,0" 
+                      SelectionChanged="WeldMaterial_Changed"/>
         </Canvas>
 
         <Canvas Grid.Row="3">
+            <Canvas.DataContext>
+                <vm:SelectMaterialViewModel />
+            </Canvas.DataContext>
             <Label Content="焊接深度/毫米" Canvas.Left="100" Canvas.Top="10"
                    FontFamily="YaHei" FontSize="14"
                    HorizontalAlignment="Center"/>
@@ -54,27 +45,39 @@
                      Canvas.Left="200" Canvas.Top="7" TextWrapping="NoWrap"
                      FontFamily="YaHei" FontSize="14"
                      Padding="5,6,0,0"
+                     InputMethod.IsInputMethodEnabled="False"
                      GotFocus="SheetThickness_GotFocus" 
                      PreviewMouseLeftButtonDown="SheetThickness_PreviewMouseLeftButtonDown" 
+                     KeyDown="SheetThickness_KeyDown"
                      Text="{Binding Path=SheetThickness}" />
         </Canvas>
 
         <Canvas Grid.Row="5">
+            <Canvas.DataContext>
+                <vm:SelectMaterialViewModel />
+            </Canvas.DataContext>
             <Label Content="焊丝直径/毫米" Canvas.Left="100" Canvas.Top="10"
                    FontFamily="YaHei" FontSize="14"
                    HorizontalAlignment="Center"/>
             <TextBox Name="WireDiameter" Width="100" Height="28"
                      Canvas.Left="200" Canvas.Top="7" TextWrapping="NoWrap"
                      FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                     InputMethod.IsInputMethodEnabled="False"
                      GotFocus="WireDiameter_GotFocus"
                      PreviewMouseLeftButtonDown="WireDiameter_PreviewMouseLeftButtonDown"
+                     KeyDown="WireDiameter_KeyDown"
                      Text="{Binding Path=WireDiameter}"/>
         </Canvas>
 
         <!-- button -->
         <Canvas Grid.Row="7">
-            <Button Content="_Ok" Canvas.Right="12" Canvas.Bottom="10" Width="75"
+            <StackPanel Canvas.Right="15" Canvas.Bottom="15" 
+                        Orientation="Horizontal">
+                <Button Content="_Cancel" Width="75" Margin="0,0,5,0"
+                        Click="CancelButton_Click" />
+                <Button Content="_Ok" Width="75" Margin="0,0,5,0"
                     Click="OkButton_Click" />
+            </StackPanel>
         </Canvas>
 
     </Grid>
