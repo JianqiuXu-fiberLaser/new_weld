@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="RobotWeld2.TraceCanvas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RobotWeld2"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid HorizontalAlignment="Center" Margin="10,0,10,0">
+        <Image Source="./Images/20230405water.png" Stretch="Uniform" />
+        <Canvas>
+            <Rectangle Name="wnRectangle" Width="185" Height="209" Fill="Transparent" Stroke="LightGreen" StrokeDashArray="3" Canvas.Top="185" Canvas.Left="136">
+                <Rectangle.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0" Angle="-1.5"/>
+                </Rectangle.RenderTransform>
+                <Rectangle.Triggers>
+                    <!-- Animates the rectangle's opacity. -->
+                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="wnRectangle" Storyboard.TargetProperty="StrokeThickness" From="1.8" To="3.3" Duration="0:0:8" AutoReverse="True" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Rectangle.Triggers>
+            </Rectangle>
+
+            <Rectangle Name="wnsRectangle" Width="145" Height="167" Fill="Transparent" Stroke="LightBlue" StrokeDashArray="3" Canvas.Top="369" Canvas.Left="306">
+                <Rectangle.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0" Angle="-181.5"/>
+                </Rectangle.RenderTransform>
+                <Rectangle.Triggers>
+                    <!-- Animates the rectangle's opacity. -->
+                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="wnsRectangle" Storyboard.TargetProperty="StrokeThickness" From="3.3" To="1.8" Duration="0:0:8" AutoReverse="True" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Rectangle.Triggers>
+            </Rectangle>
+
+            <Rectangle Name="TextRectangle" Width="100" Height="60" Fill="#7DFFFFFF" Stroke="Wheat" StrokeThickness="3" Canvas.Top="255" Canvas.Left="181">
+                <Rectangle.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0" Angle="-1.5"/>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <TextBlock Name="PmText" Text="{Binding PmText}" FontFamily="Microsoft YaHei UI" FontSize="16" FontWeight="Black" Canvas.Top="272" Canvas.Left="202">
+                <TextBlock.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0" Angle="-1.5"/>
+                </TextBlock.RenderTransform>
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PmFlag}" Value="true">
+                                <Setter Property="Foreground" Value="DarkGreen"/>
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=PmFlag}" Value="false">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <Rectangle Name="btRectangle" Height="5" Fill="Red" Stroke="Red" StrokeThickness="1" Canvas.Top="465" Canvas.Left="215">
+                <Rectangle.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0" Angle="12"/>
+                </Rectangle.RenderTransform>
+                <Rectangle.Triggers>
+                    <!-- Animates the rectangle's opacity. -->
+                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="btRectangle" Storyboard.TargetProperty="Width" From="50" To="10" Duration="0:0:3" AutoReverse="True" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Rectangle.Triggers>
+            </Rectangle>
+
+            <Rectangle Name="bt2Rectangle" Height="5" Fill="Red" Stroke="Red" StrokeThickness="1" Canvas.Top="460" Canvas.Left="265">
+                <Rectangle.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0" Angle="12"/>
+                </Rectangle.RenderTransform>
+                <Rectangle.Triggers>
+                    <!-- Animates the rectangle's opacity. -->
+                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="bt2Rectangle" Storyboard.TargetProperty="Width" From="30" To="0" Duration="0:0:3"  AutoReverse="True" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Rectangle.Triggers>
+            </Rectangle>
+
+            <Ellipse Width="30" Height="12" Fill="Transparent" Stroke="Red" StrokeThickness="1" Canvas.Top="410" Canvas.Left="225"/>
+            <Rectangle Name="ltRectangle" Width="53" Height="5" Fill="Red" Stroke="Red" StrokeThickness="1" Canvas.Top="458" Canvas.Left="346">
+                <Rectangle.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0" Angle="10"/>
+                </Rectangle.RenderTransform>
+                <Rectangle.Triggers>
+                    <!-- Animates the rectangle's opacity. -->
+                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="ltRectangle" Storyboard.TargetProperty="Width" From="50" To="10" Duration="0:0:3" AutoReverse="True" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Rectangle.Triggers>
+            </Rectangle>
+
+            <Rectangle Name="lt2Rectangle" Width="53" Height="5" Fill="Red" Stroke="Red" StrokeThickness="1" Canvas.Top="455" Canvas.Left="396">
+                <Rectangle.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0" Angle="10"/>
+                </Rectangle.RenderTransform>
+                <Rectangle.Triggers>
+                    <!-- Animates the rectangle's opacity. -->
+                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="lt2Rectangle" Storyboard.TargetProperty="Width" From="30" To="0" Duration="0:0:3" AutoReverse="True" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Rectangle.Triggers>
+            </Rectangle>
+            <Ellipse Width="30" Height="13" Fill="Transparent" Stroke="Red" StrokeThickness="1" Canvas.Top="405" Canvas.Left="355" />
+        </Canvas>
+    </Grid>
+</UserControl>

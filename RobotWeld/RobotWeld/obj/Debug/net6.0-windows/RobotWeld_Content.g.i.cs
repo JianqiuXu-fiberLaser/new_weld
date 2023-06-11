@@ -8,17 +8,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/background.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/curve.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/decode.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/downarrow.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/dxf.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/flame.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/flat.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/floppydisk.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/greenx.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/hand.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/intersection.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/logoxll.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/open.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/param.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/question.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/spiral.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/stage.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/stream.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/sunflower.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/topcover.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/tpmed.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/vane.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/wire.png")]
 
 

@@ -1,0 +1,632 @@
+﻿<Window x:Class="RobotWeld.VaneWheel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:RobotWeld.ViewModel"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="叶轮参数" Height="540" Width="960" ResizeMode="NoResize"
+        Icon="/Images/sunflower.ico">
+
+    <Window.DataContext>
+        <vm:VaneWheelViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <vm:VaneTypeList x:Key="vanetype" />
+    </Window.Resources>
+    
+    <!-- Grid configuration -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="170" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="170" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+
+        <!-- Vane Number -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" Orientation="Horizontal"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Margin="150,0,0,0">
+                <Label Content="叶轮类型" FontFamily="YaHei" FontSize="14"/>
+                <ComboBox Name="VaneType" Width="100" Height="28"
+                          FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                          ItemsSource="{Binding Source={StaticResource vanetype}}"
+                          SelectedIndex="{Binding Path=VaneIndex}"
+                          DisplayMemberPath="Name"
+                          SelectionChanged="VaneType_Changed" />
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Margin="0,0,150,0">
+                <Label Content="叶片数量" FontFamily="YaHei" FontSize="14"/>
+                <TextBox Name="VaneNumber" Width="100" Height="28"
+                     TextWrapping="NoWrap"
+                     FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                     InputMethod.IsInputMethodEnabled="False"
+                     GotFocus="VaneNumber_GotFocus"
+                     PreviewMouseLeftButtonDown="VaneNumber_PreviewMouseLeftButtonDown"
+                     KeyDown="VaneNumber_KeyDown"
+                     Text="{Binding Path=VaneNumber, Mode=TwoWay}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Position 1 -->
+        <Grid Name="p1" Grid.Row="1">
+            <Border Background="GhostWhite" BorderBrush="Silver" BorderThickness="1"
+                    Margin="10,0,10,0" CornerRadius="5,5,5,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <StackPanel Grid.Row="0" Orientation="Horizontal"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Margin="0">
+                        <Label Content="左工位" FontFamily="YaHei" FontSize="16" 
+                       Foreground="DarkRed" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <!-- P1 value -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Y1 axis -->
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Y1 Accelerate button -->
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            Margin="0" >
+                                    <Button Height="40" Width="40" HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top" Content="Y1Positive" Margin="0,0,10,0"
+                                            Template="{DynamicResource ButtonControlTemplate1}" Cursor="Hand">
+                                        <Button.Resources>
+                                            <ControlTemplate x:Key="ButtonControlTemplate1" TargetType="{x:Type Button}">
+                                                <Grid>
+                                                    <Ellipse x:Name="ButtonEllipse" Width="Auto" Height="Auto" 
+                                                             StrokeThickness="4" Fill="White" Stroke="DarkGreen"></Ellipse>
+                                                    <Polygon x:Name="ButtonPolygon" Points="25,10 7,20 25,30" 
+                                                             Stroke="DarkGray" StrokeThickness="2">
+                                                        <Polygon.Fill>
+                                                            <SolidColorBrush Color="DarkGray" Opacity="0.8"/>
+                                                        </Polygon.Fill>
+                                                    </Polygon>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Button Height="40" Width="40" HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top" Content="Y1Negative" Margin="10,0,0,0"
+                                            Template="{DynamicResource ButtonControlTemplate2}" Cursor="Hand">
+                                        <Button.Resources>
+                                            <ControlTemplate x:Key="ButtonControlTemplate2" TargetType="{x:Type Button}">
+                                                <Grid>
+                                                    <Ellipse x:Name="ButtonEllipse" Width="Auto" Height="Auto" 
+                                                             StrokeThickness="4" Fill="White" Stroke="DarkGreen"></Ellipse>
+                                                    <Polygon x:Name="ButtonPolygon" Points="13,10 33,20 13,30" 
+                                                             Stroke="DarkGray" StrokeThickness="2">
+                                                        <Polygon.Fill>
+                                                            <SolidColorBrush Color="DarkGray" Opacity="0.8"/>
+                                                        </Polygon.Fill>
+                                                    </Polygon>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Resources>
+                                    </Button>
+                                </StackPanel>
+
+                                <!-- Y1 slider for hand adjust speed -->
+                                <StackPanel Grid.Row="1" Orientation="Horizontal"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Slider  Name="Y1Slider" Width="150"  
+                                        Maximum="100" Minimum="0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal"
+                                           HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    <Label Content="手动速度" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+                                
+                            <!-- input position -->
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" 
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Margin="10,0,0,0">
+                                    <Label Content="Y位置" FontFamily="YaHei" FontSize="14"/>
+                                    <TextBox Name="Y1Position" Width="100" Height="28"
+                                             TextWrapping="NoWrap"
+                                             FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                                             InputMethod.IsInputMethodEnabled="False"
+                                             GotFocus="Y1Position_GotFocus"
+                                             PreviewMouseLeftButtonDown="Y1Position_PreviewMouseLeftButtonDown"
+                                             KeyDown="Y1Position_KeyDown"
+                                             Text="{Binding Path=Y1Position, Mode=TwoWay}"/>
+                                    <Label Content="毫米" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" 
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Margin="10,0,0,0">
+                                    <Label Content="Y速度" FontFamily="YaHei" FontSize="14"/>
+                                    <TextBox Name="Y1Velocity" Width="100" Height="28"
+                                             TextWrapping="NoWrap"
+                                             FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                                             InputMethod.IsInputMethodEnabled="False"
+                                             GotFocus="Y1Velocity_GotFocus"
+                                             PreviewMouseLeftButtonDown="Y1Velocity_PreviewMouseLeftButtonDown"
+                                             KeyDown="Y1Velocity_KeyDown"
+                                             Text="{Binding Path=Y1Velocity, Mode=TwoWay}"/>
+                                    <Label Content="毫米/秒" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
+                        <!-- C1 axis -->
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="200" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" 
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Margin="40,0,0,0">
+                                    <Label Content="C位置" FontFamily="YaHei" FontSize="14"/>
+                                    <TextBox Name="C1Position" Width="100" Height="28"
+                                             TextWrapping="NoWrap"
+                                             FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                                             InputMethod.IsInputMethodEnabled="False"
+                                             GotFocus="C1Position_GotFocus"
+                                             PreviewMouseLeftButtonDown="C1Position_PreviewMouseLeftButtonDown"
+                                             KeyDown="C1Position_KeyDown"
+                                             Text="{Binding Path=C1Position, Mode=TwoWay}"/>
+                                    <Label Content="毫米" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" 
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Margin="40,0,0,0">
+                                    <Label Content="C速度" FontFamily="YaHei" FontSize="14"/>
+                                    <TextBox Name="C1Velocity" Width="100" Height="28"
+                                             TextWrapping="NoWrap"
+                                             FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                                             InputMethod.IsInputMethodEnabled="False"
+                                             GotFocus="C1Velocity_GotFocus"
+                                             PreviewMouseLeftButtonDown="C1Velocity_PreviewMouseLeftButtonDown"
+                                             KeyDown="C1Velocity_KeyDown"
+                                             Text="{Binding Path=C1Velocity, Mode=TwoWay}"/>
+                                    <Label Content="毫米/秒" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- C1 Accelerate button -->
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            Margin="0" >
+                                    <Button Height="40" Width="40" HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top" Content="C1Positive" Margin="0,0,10,0"
+                                            Template="{DynamicResource ButtonControlTemplate3}" Cursor="Hand">
+                                        <Button.Resources>
+                                            <ControlTemplate x:Key="ButtonControlTemplate3" TargetType="{x:Type Button}">
+                                                <Grid>
+                                                    <Ellipse x:Name="ButtonEllipse" Width="Auto" Height="Auto" 
+                                                             StrokeThickness="4" Fill="White" Stroke="DarkGreen"></Ellipse>
+                                                    <Polygon x:Name="ButtonPolygon" Points="25,10 7,20 25,30" 
+                                                             Stroke="DarkGray" StrokeThickness="2">
+                                                        <Polygon.Fill>
+                                                            <SolidColorBrush Color="DarkGray" Opacity="0.8"/>
+                                                        </Polygon.Fill>
+                                                    </Polygon>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Button Height="40" Width="40" HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top" Content="C1Negative" Margin="10,0,0,0"
+                                            Template="{DynamicResource ButtonControlTemplate4}" Cursor="Hand">
+                                        <Button.Resources>
+                                            <ControlTemplate x:Key="ButtonControlTemplate4" TargetType="{x:Type Button}">
+                                                <Grid>
+                                                    <Ellipse x:Name="ButtonEllipse" Width="Auto" Height="Auto" 
+                                                             StrokeThickness="4" Fill="White" Stroke="DarkGreen"></Ellipse>
+                                                    <Polygon x:Name="ButtonPolygon" Points="13,10 33,20 13,30" 
+                                                             Stroke="DarkGray" StrokeThickness="2">
+                                                        <Polygon.Fill>
+                                                            <SolidColorBrush Color="DarkGray" Opacity="0.8"/>
+                                                        </Polygon.Fill>
+                                                    </Polygon>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Resources>
+                                    </Button>
+                                </StackPanel>
+
+                                <!-- C1 slider for hand adjust speed -->
+                                <StackPanel Grid.Row="1" Orientation="Horizontal"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Slider  Name="C1Slider" Width="150"  
+                                        Maximum="100" Minimum="0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal"
+                                           HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    <Label Content="手动速度" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Just seperator -->
+        <Canvas Grid.Row="2"/>
+        
+        <!-- Position 2 -->
+        <Grid Name="p2" Grid.Row="3">
+            <Border Background="GhostWhite" BorderBrush="Silver" BorderThickness="1"
+                    Margin="10,0,10,0" CornerRadius="5,5,5,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Margin="0">
+                        <Label Content="右工位" FontFamily="YaHei" FontSize="16" 
+                       Foreground="DarkRed" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <!-- P2 value -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Y2 axis -->
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Y2 Accelerate button -->
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            Margin="0" >
+                                    <Button Height="40" Width="40" HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top" Content="Y2Positive" Margin="0,0,10,0"
+                                            Template="{DynamicResource ButtonControlTemplate5}" Cursor="Hand">
+                                        <Button.Resources>
+                                            <ControlTemplate x:Key="ButtonControlTemplate5" TargetType="{x:Type Button}">
+                                                <Grid>
+                                                    <Ellipse x:Name="ButtonEllipse" Width="Auto" Height="Auto" 
+                                                             StrokeThickness="4" Fill="White" Stroke="DarkGreen"></Ellipse>
+                                                    <Polygon x:Name="ButtonPolygon" Points="25,10 7,20 25,30" 
+                                                             Stroke="DarkGray" StrokeThickness="2">
+                                                        <Polygon.Fill>
+                                                            <SolidColorBrush Color="DarkGray" Opacity="0.8"/>
+                                                        </Polygon.Fill>
+                                                    </Polygon>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Button Height="40" Width="40" HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top" Content="Y2Negative" Margin="10,0,0,0"
+                                            Template="{DynamicResource ButtonControlTemplate6}" Cursor="Hand">
+                                        <Button.Resources>
+                                            <ControlTemplate x:Key="ButtonControlTemplate6" TargetType="{x:Type Button}">
+                                                <Grid>
+                                                    <Ellipse x:Name="ButtonEllipse" Width="Auto" Height="Auto" 
+                                                             StrokeThickness="4" Fill="White" Stroke="DarkGreen"></Ellipse>
+                                                    <Polygon x:Name="ButtonPolygon" Points="13,10 33,20 13,30" 
+                                                             Stroke="DarkGray" StrokeThickness="2">
+                                                        <Polygon.Fill>
+                                                            <SolidColorBrush Color="DarkGray" Opacity="0.8"/>
+                                                        </Polygon.Fill>
+                                                    </Polygon>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Resources>
+                                    </Button>
+                                </StackPanel>
+
+                                <!-- Y2 slider for hand adjust speed -->
+                                <StackPanel Grid.Row="1" Orientation="Horizontal"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Slider  Name="Y2Slider" Width="150"  
+                                        Maximum="100" Minimum="0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal"
+                                           HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    <Label Content="手动速度" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- input position -->
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" 
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Margin="10,0,0,0">
+                                    <Label Content="Y位置" FontFamily="YaHei" FontSize="14"/>
+                                    <TextBox Name="Y2Position" Width="100" Height="28"
+                                             TextWrapping="NoWrap"
+                                             FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                                             InputMethod.IsInputMethodEnabled="False"
+                                             GotFocus="Y2Position_GotFocus"
+                                             PreviewMouseLeftButtonDown="Y2Position_PreviewMouseLeftButtonDown"
+                                             KeyDown="Y2Position_KeyDown"
+                                             Text="{Binding Path=Y2Position, Mode=TwoWay}"/>
+                                    <Label Content="毫米" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" 
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Margin="10,0,0,0">
+                                    <Label Content="Y速度" FontFamily="YaHei" FontSize="14"/>
+                                    <TextBox Name="Y2Velocity" Width="100" Height="28"
+                                             TextWrapping="NoWrap"
+                                             FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                                             InputMethod.IsInputMethodEnabled="False"
+                                             GotFocus="Y2Velocity_GotFocus"
+                                             PreviewMouseLeftButtonDown="Y2Velocity_PreviewMouseLeftButtonDown"
+                                             KeyDown="Y2Velocity_KeyDown"
+                                             Text="{Binding Path=Y2Velocity, Mode=TwoWay}"/>
+                                    <Label Content="毫米/秒" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
+                        <!-- C2 axis -->
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="200" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" 
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Margin="40,0,0,0">
+                                    <Label Content="C位置" FontFamily="YaHei" FontSize="14"/>
+                                    <TextBox Name="C2Position" Width="100" Height="28"
+                                             TextWrapping="NoWrap"
+                                             FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                                             InputMethod.IsInputMethodEnabled="False"
+                                             GotFocus="C2Position_GotFocus"
+                                             PreviewMouseLeftButtonDown="C2Position_PreviewMouseLeftButtonDown"
+                                             KeyDown="C2Position_KeyDown"
+                                             Text="{Binding Path=C2Position, Mode=TwoWay}"/>
+                                    <Label Content="毫米" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" 
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Margin="40,0,0,0">
+                                    <Label Content="C速度" FontFamily="YaHei" FontSize="14"/>
+                                    <TextBox Name="C2Velocity" Width="100" Height="28"
+                                             TextWrapping="NoWrap"
+                                             FontFamily="YaHei" FontSize="14" Padding="5,6,0,0"
+                                             InputMethod.IsInputMethodEnabled="False"
+                                             GotFocus="C2Velocity_GotFocus"
+                                             PreviewMouseLeftButtonDown="C2Velocity_PreviewMouseLeftButtonDown"
+                                             KeyDown="C2Velocity_KeyDown"
+                                             Text="{Binding Path=C2Velocity, Mode=TwoWay}"/>
+                                    <Label Content="毫米/秒" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- C2 Accelerate button -->
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            Margin="0" >
+                                    <Button Height="40" Width="40" HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top" Content="C2Positive" Margin="0,0,10,0"
+                                            Template="{DynamicResource ButtonControlTemplate7}" Cursor="Hand">
+                                        <Button.Resources>
+                                            <ControlTemplate x:Key="ButtonControlTemplate7" TargetType="{x:Type Button}">
+                                                <Grid>
+                                                    <Ellipse x:Name="ButtonEllipse" Width="Auto" Height="Auto" 
+                                                             StrokeThickness="4" Fill="White" Stroke="DarkGreen"></Ellipse>
+                                                    <Polygon x:Name="ButtonPolygon" Points="25,10 7,20 25,30" 
+                                                             Stroke="DarkGray" StrokeThickness="2">
+                                                        <Polygon.Fill>
+                                                            <SolidColorBrush Color="DarkGray" Opacity="0.8"/>
+                                                        </Polygon.Fill>
+                                                    </Polygon>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Button Height="40" Width="40" HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top" Content="C2Negative" Margin="10,0,0,0"
+                                            Template="{DynamicResource ButtonControlTemplate8}" Cursor="Hand">
+                                        <Button.Resources>
+                                            <ControlTemplate x:Key="ButtonControlTemplate8" TargetType="{x:Type Button}">
+                                                <Grid>
+                                                    <Ellipse x:Name="ButtonEllipse" Width="Auto" Height="Auto" 
+                                                             StrokeThickness="4" Fill="White" Stroke="DarkGreen"></Ellipse>
+                                                    <Polygon x:Name="ButtonPolygon" Points="13,10 33,20 13,30" 
+                                                             Stroke="DarkGray" StrokeThickness="2">
+                                                        <Polygon.Fill>
+                                                            <SolidColorBrush Color="DarkGray" Opacity="0.8"/>
+                                                        </Polygon.Fill>
+                                                    </Polygon>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="ButtonPolygon" Property="Fill" Value="DarkGreen"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Resources>
+                                    </Button>
+                                </StackPanel>
+
+                                <!-- C1 slider for hand adjust speed -->
+                                <StackPanel Grid.Row="1" Orientation="Horizontal"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Slider  Name="C2Slider" Width="150"  
+                                        Maximum="100" Minimum="0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal"
+                                           HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    <Label Content="手动速度" FontFamily="YaHei" FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Just seperator -->
+        <Canvas Grid.Row="4"/>
+
+        <!-- Buttons -->
+        <Canvas Grid.Row="5">
+            <StackPanel Canvas.Right="25" Canvas.Bottom="25" 
+                        Orientation="Horizontal">
+                <Button Content="取消(_C)" Width="75" Margin="0,0,5,0"
+                        Click="CancelButton_Click" />
+                <Button Content="确定(_O)" Width="75" Margin="0,0,5,0"
+                    Click="OkButton_Click" />
+            </StackPanel>
+        </Canvas>
+    </Grid>
+</Window>
