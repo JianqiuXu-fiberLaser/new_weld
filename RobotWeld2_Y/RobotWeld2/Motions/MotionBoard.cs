@@ -248,9 +248,9 @@ namespace RobotWeld2.Motions
             short crdState = 0;
             NMC_CrdGetSts(pcrdHandle, ref crdState);
             if ((crdState & BIT_AXIS_BUSY) == 0)
-                return true;
-            else
                 return false;
+            else
+                return true;
         }
 
         public void FlyMove(int[] pts, double moveSpeed, double synAcc)
@@ -263,6 +263,14 @@ namespace RobotWeld2.Motions
             NMC_CrdEndMtn(pcrdHandle);
             short rtn = NMC_CrdStartMtn(pcrdHandle);
             Assertion.AssertError("飞行坐标数值错误", rtn);
+
+            // when coordinate has an error, it need to be reset all process.
+            if (rtn != 0)
+            {
+                LaserDrives.LaserOff();
+                MotionOperate.StopAllThread();
+                return;
+            }
 
             short crdState = 0;
             while (true)
@@ -289,6 +297,14 @@ namespace RobotWeld2.Motions
             NMC_CrdEndMtn(pcrdHandle);
             short rtn = NMC_CrdStartMtn(pcrdHandle);
             Promption.Prompt("焊接坐标数值错误", rtn);
+
+            // when coordinate has an error, it need to be reset all process.
+            if (rtn != 0)
+            {
+                LaserDrives.LaserOff();
+                MotionOperate.StopAllThread();
+                return;
+            }
 
             short crdState = 0;
             while (true)
@@ -369,7 +385,7 @@ namespace RobotWeld2.Motions
         public void SetBit(int bitAddress, bool inValue)
         {
             if (inValue)
-                NMC_SetDOBit(devHandle, (short)bitAddress, 0);
+                NMC_SetDOBit(devHandle, (short)bitAddress, 1);
             else
                 NMC_SetDOBit(devHandle, (short)bitAddress, 0);
         }
@@ -470,19 +486,7 @@ namespace RobotWeld2.Motions
             }
         }
 
-        /// <summary>
-        /// Adjust laser power, before this command, the laser should initialized
-        /// </summary>
-        /// <param name="pcode"> the power percentage</param>
-        /// <returns> if successful, return true. </returns>
-        public bool AdjustPower(int powerPercent)
-        {
-            short pcode = (short)(powerPercent * POWER_CODE);
-            NMC_SetDac(devHandle, 256, pcode);
-            return true;
-        }
-
-        public bool LaserOn(int powerPercent)
+        public bool LaserOn(double powerPercent)
         {
             short pcode = (short)(powerPercent * POWER_CODE);
             NMC_LaserOnOff(devHandle, 1, 0);
@@ -490,7 +494,7 @@ namespace RobotWeld2.Motions
             return true;
         }
 
-        public void LaserOff()
+        public static void LaserOff()
         {
             NMC_SetDac(devHandle, 256, 0);
             NMC_LaserOnOff(devHandle, 0, 0);

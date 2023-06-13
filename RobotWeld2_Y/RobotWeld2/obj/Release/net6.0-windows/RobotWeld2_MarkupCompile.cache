@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 C:\Users\admin\source\repos\RobotWeld2\RobotWeld2\App.xaml
-20897869824
+21534347632
 26389864511
-66-1577110306
+69-1165637065
 196919087825
-About.xaml;AirValve.xaml;AlarmBox.xaml;AlarmBoxRed.xaml;AlarmBoxRight.xaml;AlarmBoxRightRed.xaml;AlarmBoxYellowRight.xaml;ConfirmPoint.xaml;InputLaserParameter.xaml;LaserType.xaml;MainWindow.xaml;ManualOperation.xaml;PassWord.xaml;PlcIo.xaml;SelectMaterial.xaml;Setup.xaml;ToggleButtonLaser.xaml;ToggleButtonPoint.xaml;TraceCanvas.xaml;VaneWheel.xaml;
+About.xaml;AirValve.xaml;AlarmBox.xaml;AlarmBoxRed.xaml;AlarmBoxRight.xaml;AlarmBoxRightRed.xaml;AlarmBoxYellowRight.xaml;ConfirmPoint.xaml;InputLaserParameter.xaml;Intersect.xaml;LaserType.xaml;MainWindow.xaml;ManualOperation.xaml;PassWord.xaml;PlcIo.xaml;SelectMaterial.xaml;Setup.xaml;ToggleButtonLaser.xaml;ToggleButtonPoint.xaml;TraceCanvas.xaml;VaneWheel.xaml;
 
 False
 

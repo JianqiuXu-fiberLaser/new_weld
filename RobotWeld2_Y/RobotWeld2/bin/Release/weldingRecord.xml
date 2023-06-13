@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--The record file for the sun flower welding system-->
+<Projects>
+  <project>
+    <fileindex>202012183</fileindex>
+    <trace>
+      <index>99989796</index>
+      <code>330</code>
+      <tracetype>van</tracetype>
+    </trace>
+    <material>
+      <type>0</type>
+      <thick>1.54</thick>
+      <diameter>0</diameter>
+    </material>
+    <laser>
+      <power>450</power>
+      <frequency>0</frequency>
+      <pulse>0</pulse>
+      <duty>0</duty>
+      <rise>0</rise>
+      <fall>0</fall>
+      <hold>0</hold>
+      <wire>0</wire>
+      <in>0</in>
+      <out>0</out>
+      <weld>50</weld>
+      <wobble>20</wobble>
+      <leap>250</leap>
+      <maxpower>2000</maxpower>
+    </laser>
+  </project>
+</Projects>

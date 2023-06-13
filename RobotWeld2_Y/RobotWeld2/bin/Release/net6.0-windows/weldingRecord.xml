@@ -5,7 +5,7 @@
     <fileindex>202012183</fileindex>
     <trace>
       <index>99989796</index>
-      <code>375</code>
+      <code>335</code>
       <tracetype>van</tracetype>
     </trace>
     <material>
@@ -24,7 +24,7 @@
       <wire>0</wire>
       <in>0</in>
       <out>0</out>
-      <weld>50</weld>
+      <weld>25</weld>
       <wobble>20</wobble>
       <leap>250</leap>
       <maxpower>2000</maxpower>

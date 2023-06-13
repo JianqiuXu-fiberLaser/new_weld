@@ -20,7 +20,7 @@ namespace RobotWeld2.AppModel
         private TakeTrace? takeTrace;
 
         private List<Point>? points;
-        private List<Point>? chpoints;
+        private Point? chpoints;
         private List<Point>? copyPoints;
 
         //
@@ -32,8 +32,7 @@ namespace RobotWeld2.AppModel
         {
             points = new List<Point>();
             GetPoints(points);
-            dmFile.DisplyPointList(points);
-            dmFile.PmFlag = false;
+            dmFile.DisplayPointList(points);
             dmFile.PreparedState(false);
 
             _mo = new MotionOperate();
@@ -51,22 +50,15 @@ namespace RobotWeld2.AppModel
 
         public void WeldTrace(Tracetype tpy)
         {
-            if (runTrace != null && _mo != null && points != null)
+            if (!dmFile.PmFlag)
             {
-                runTrace.StartRunTrace(dmFile, _mo);
-                runTrace.Run(tpy, points);
+                dmFile.PreparedState(true);
+                if (runTrace != null && _mo != null && points != null)
+                {
+                    runTrace.StartRunTrace(dmFile, _mo);
+                    runTrace.Run(tpy, points);
+                }
             }
-
-/*            if (extraController != null)
-            {
-                extraController.SelfResetTurnOn(ActionIndex.AUTO_MODE);
-                Thread.Sleep(10);
-                extraController.SelfResetTurnOn(ActionIndex.LEFT_READY);
-                Thread.Sleep(10);
-                extraController.SelfResetTurnOn(ActionIndex.RIGHT_READY);
-            }*/
-
-            dmFile.PreparedState(true);
         }
 
         //
@@ -77,23 +69,6 @@ namespace RobotWeld2.AppModel
         {
             this.dmFile = dmFile;
             this.mainViewModel = mainViewModel;
-        }
-
-        public void Initial()
-        {
-            points = new List<Point>();
-            GetPoints(points);
-            dmFile.DisplyPointList(points);
-
-            _ma = new();
-            dmFile.FreshMsg();
-            runTrace = new(dmFile);
-            takeTrace = new(dmFile);
-
-            extraController = new(dmFile, mainViewModel);
-            extraController.ConnectPLC();
-            Thread.Sleep(100);    // waiting for connection.
-            extraController.SelfResetTurnOn(ActionIndex.MANUAL_MODE);
         }
 
         public void NewFile()
@@ -145,77 +120,24 @@ namespace RobotWeld2.AppModel
             }
         }
 
-        public void RunTrace(Tracetype tpy)
-        {
-            MoveAction.StopHandWheel();
-            if (_ma != null && runTrace != null)
-            {
-                _ma.SetupParameter(dmFile);
-                if (dmFile.laserParameter != null)
-                {
-                    _ma.SetupMaxPower(2000);
-                    _ma.SetupLaser(dmFile.laserParameter);
-                }
-
-                if (points != null && points.Count > 0)
-                {
-                    runTrace.WeldTrace(_ma, tpy, points);
-                }
-            }
-
-            if (extraController != null)
-            {
-                extraController.SelfResetTurnOn(ActionIndex.AUTO_MODE);
-                Thread.Sleep(10);
-                extraController.SelfResetTurnOn(ActionIndex.LEFT_READY);
-                Thread.Sleep(10);
-                extraController.SelfResetTurnOn(ActionIndex.RIGHT_READY);
-            }
-        }
-
         public void DisplayList(Point dispt)
         {
             if (copyPoints == null) return;
 
-            if (dmFile.PointIndex <= copyPoints.Count)
+            if (dmFile.GetPointIndex() <= copyPoints.Count)
             {
-                copyPoints[dmFile.PointIndex] = dispt;
+                copyPoints[dmFile.GetPointIndex()] = dispt;
             }
             else
             {
                 copyPoints.Add(dispt);
             }
-            dmFile.DisplyPointList(copyPoints, dmFile.PointIndex);
-        }
-
-
-        private void ParsePointList(string inString, List<Point> wPointList)
-        {
-            string[] strs = inString.Split('\n');
-
-            for (short i = 1; i < strs.Length; i++)
-            {
-                string[] var = strs[i].Split(',');
-                if (var.Length == 6)
-                {
-                    double x = Convert.ToDouble(var[0]);
-                    double y = Convert.ToDouble(var[1]);
-                    double z = Convert.ToDouble(var[2]);
-                    Vector vector = new(x, y, z);
-
-                    int lt = Convert.ToInt32(var[3]);
-                    int ls = Convert.ToInt32(var[4]);
-                    int pp = Convert.ToInt32(var[5]);
-                    Point point = new(lt, ls, pp, vector);
-
-                    wPointList.Add(point);
-                }
-            }
+            dmFile.DisplayPointList(copyPoints, dmFile.GetPointIndex());
         }
 
         public void ResetCard()
         {
-            // _ma?.ResetAll();
+            dmFile.PreparedState(false);
             _mo?.RunResetAxis();
         }
 
@@ -224,11 +146,13 @@ namespace RobotWeld2.AppModel
             _mo?.InitialLaser();
             Thread.Sleep(5);
             _mo?.SetupLaserParameter(dmFile.laserParameter);
+            _mo?.OpenAir();
             _mo?.LaserOnNoRise();
         }
 
         public void JogLightOff()
         {
+            _mo?.CloseAir();
             _mo?.LaserOffNoFall();
         }
 
@@ -238,9 +162,12 @@ namespace RobotWeld2.AppModel
 
         public void TakePoints()
         {
+            MotionOperate.StopAllThread();
+            // ChkPre.StopChkThread();
+
             if (dmFile != null && points != null)
             {
-                dmFile.PointIndex = 0;
+                dmFile.SetPointIndex(0);
             }
 
             if (_mo != null && dmFile != null && takeTrace != null)
@@ -248,16 +175,20 @@ namespace RobotWeld2.AppModel
                 takeTrace.OpenHandwheel(_mo, dmFile, this);
 
                 // new point recorded in chpoint
-                chpoints ??= new List<Point>();
-                chpoints.Clear();
+                chpoints = new Point();
 
                 // copy Points stored the point's information during taking trace.
                 copyPoints ??= new List<Point>();
+                copyPoints.Clear();
                 if (points != null)
                 {
-                    copyPoints = points;
+                    for (short i = 0; i < points.Count; i++)
+                    {
+                        copyPoints.Add(points[i]);
+                    }
                 }
-                dmFile.DisplyPointList(copyPoints, dmFile.PointIndex);
+
+                dmFile.DisplayPointList(copyPoints, dmFile.GetPointIndex());
                 dmFile.PreparedState(false);
             }
         }
@@ -265,13 +196,24 @@ namespace RobotWeld2.AppModel
         public void GotoSingleStep()
         {
             int[] ptxyz = new int[3];
-            int pd = mainViewModel.PointInfo;
-            if (points != null)
+            int pd = dmFile.GetPointIndex();
+
+            if (copyPoints != null)
             {
-                ptxyz[0] = (int)points[pd].vector.X;
-                ptxyz[1] = (int)points[pd].vector.Y;
-                ptxyz[2] = (int)points[pd].vector.Z;
-                dmFile.DisplyPointList(points, dmFile.PointIndex);
+                if (pd < copyPoints.Count)
+                {
+                    ptxyz[0] = (int)copyPoints[pd].vector.X;
+                    ptxyz[1] = (int)copyPoints[pd].vector.Y;
+                    ptxyz[2] = (int)copyPoints[pd].vector.Z;
+                    dmFile.DisplayPointList(copyPoints, pd);
+                }
+                else
+                {
+                    dmFile.SetPointIndex(pd++);
+                    AddPoint(0, 0, 0);
+                    dmFile.DisplayPointList(copyPoints, pd);
+                    return;
+                }
             }
 
             SingleStep ss = new(dmFile);
@@ -300,8 +242,21 @@ namespace RobotWeld2.AppModel
             {
                 Vector vc = new(x, y, z);
                 Point onept = new(lt, ls, dmFile.LaserPower, vc);
-                chpoints?.Add(onept);
-                DisplayList(onept);
+                chpoints = onept;
+
+                if (copyPoints != null && points != null)
+                {
+                    if (dmFile.GetPointIndex() < copyPoints.Count)
+                    {
+                        copyPoints[dmFile.GetPointIndex()] = onept;
+                    }
+                    else
+                    {
+                        copyPoints.Add(onept);
+                    }
+
+                    dmFile.DisplayPointList(copyPoints, dmFile.GetPointIndex());
+                }
             }
         }
 
@@ -331,7 +286,7 @@ namespace RobotWeld2.AppModel
         public void CancelChoose()
         {
             if (points != null)
-                dmFile.DisplyPointList(points, dmFile.PointIndex);
+                dmFile.DisplayPointList(points);
         }
 
         //

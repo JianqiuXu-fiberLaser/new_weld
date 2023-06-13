@@ -118,5 +118,10 @@ namespace RobotWeld2.AppModel
             }
 
         }
+
+        public void ReadMValue()
+        {
+            extraController?.ShowMValue(viewModel.ActMemory);
+        }
     }
 }

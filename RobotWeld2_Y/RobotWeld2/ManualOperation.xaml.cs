@@ -2,6 +2,7 @@
 using RobotWeld2.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace RobotWeld2
 {
@@ -19,6 +20,19 @@ namespace RobotWeld2
             manualOperationModel = new ManualOperationModel(viewModel);
             InitializeComponent();
             this.DataContext = viewModel;
+        }
+
+        //
+        // If the input character in TextBox is number, return true.
+        //
+        private static bool IsIntNumber(Key key)
+        {
+            if (key == Key.Enter || key == Key.Back ||
+                (key >= Key.D0 && key <= Key.D9) || (key >= Key.NumPad0 && key <= Key.NumPad9))
+            {
+                return true;
+            }
+            else { return false; }
         }
 
         private void LeftClip_Click(object sender, RoutedEventArgs e)
@@ -41,19 +55,34 @@ namespace RobotWeld2
             manualOperationModel.RightLocation();
         }
 
-        private void SWaddrees_GotFocus(object sender, RoutedEventArgs e)
+        private void SWaddress_GotFocus(object sender, RoutedEventArgs e)
         {
-
+            SWaddress.SelectAll();
         }
 
-        private void SWaddrees_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void SWaddress_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            var control = sender as Control;
+            if (control != null) { return; }
 
+            Keyboard.Focus(control);
+            e.Handled = true;
         }
 
-        private void SWaddrees_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void SWaddress_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-
+            if (IsIntNumber(e.Key))
+            {
+                if (e.Key == Key.Enter)
+                {
+                    manualOperationModel.ReadMValue();
+                }
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
         }
 
         private void LeftJack_Click(object sender, RoutedEventArgs e)

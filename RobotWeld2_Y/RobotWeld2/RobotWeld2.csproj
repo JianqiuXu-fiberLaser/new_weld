@@ -124,7 +124,6 @@
 
   <ItemGroup>
     <Folder Include="GCN_x64\" />
-    <Folder Include="VideoTreat\" />
   </ItemGroup>
 
   <ItemGroup>

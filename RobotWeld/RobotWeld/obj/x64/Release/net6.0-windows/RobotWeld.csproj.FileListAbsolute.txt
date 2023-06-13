@@ -1,8 +1,0 @@
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\x64\Release\net6.0-windows\RobotWeld.csproj.AssemblyReference.cache
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\x64\Release\net6.0-windows\About.g.cs
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\x64\Release\net6.0-windows\MainWindow.g.cs
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\x64\Release\net6.0-windows\App.g.cs
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\x64\Release\net6.0-windows\RobotWeld_Content.g.cs
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\x64\Release\net6.0-windows\GeneratedInternalTypeHelper.g.cs
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\x64\Release\net6.0-windows\RobotWeld_MarkupCompile.cache
-C:\Users\86137\source\repos\RobotWeld\RobotWeld\obj\x64\Release\net6.0-windows\RobotWeld_MarkupCompile.lref

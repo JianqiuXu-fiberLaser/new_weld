@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace RobotWeld2
 {
@@ -13,5 +7,19 @@ namespace RobotWeld2
     /// </summary>
     public partial class App : Application
     {
+        private static System.Threading.Mutex? mutex;
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            mutex = new System.Threading.Mutex(true, "OnlyRun");
+            if (mutex.WaitOne(0, false))
+            {
+                base.OnStartup(e);
+            }
+            else
+            {
+                this.Shutdown();
+            }
+        }
     }
 }

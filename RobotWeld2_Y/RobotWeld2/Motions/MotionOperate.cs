@@ -25,7 +25,7 @@ namespace RobotWeld2.Motions
         // the varible used to operate the motion card
         //
         private LaserParameter? _laserParameter;
-        private int[] SubPowerPercent;
+        private double[] SubPowerPercent;
 
         private static Thread? wthread;
         private static bool _threadFlag;
@@ -38,7 +38,7 @@ namespace RobotWeld2.Motions
             _mb = new MotionBoard();
             _hand = new HandWheel();
             _laser = new LaserDrives();
-            SubPowerPercent = new int[5];
+            SubPowerPercent = new double[5];
         }
 
         public void InitialCard()
@@ -110,31 +110,44 @@ namespace RobotWeld2.Motions
         private void PowerSubdivision()
         {
             if (_laserParameter == null) return;
+
             int _maxPower = _laserParameter.MaxPower;
             if (_maxPower == 0) { GiveMsg.Show("最大功率为零"); return; }
 
             int LaserPower = _laserParameter.LaserPower;
-            SubPowerPercent[0] = (int)(0.2 * LaserPower / _maxPower);
-            SubPowerPercent[1] = (int)(0.4 * LaserPower / _maxPower);
-            SubPowerPercent[2] = (int)(0.6 * LaserPower / _maxPower);
-            SubPowerPercent[3] = (int)(0.8 * LaserPower / _maxPower);
-            SubPowerPercent[4] = (int)(1.0 * LaserPower / _maxPower);
+            SubPowerPercent[0] = 0.2 * LaserPower / _maxPower;
+            SubPowerPercent[1] = 0.4 * LaserPower / _maxPower;
+            SubPowerPercent[2] = 0.6 * LaserPower / _maxPower;
+            SubPowerPercent[3] = 0.8 * LaserPower / _maxPower;
+            SubPowerPercent[4] = 1.0 * LaserPower / _maxPower;
         }
 
         public void LaserOnNoRise()
         {
             if (_laserParameter != null)
-                _laser.LaserOn(_laserParameter.LaserPower);
+            {
+                _laser.LaserOn(SubPowerPercent[4]);
+            }
         }
 
         public void LaserOffNoFall()
         {
-            _laser.LaserOff();
+            LaserDrives.LaserOff();
         }
 
         public void EchoBit(int bitAddr)
         {
             _mb.SelfResetBit(bitAddr);
+        }
+
+        public void OpenAir()
+        {
+            _mb.SetBit(8, false);
+        }
+
+        public void CloseAir()
+        {
+            _mb.SetBit(8, true);
         }
 
         public void TurnOnBit(int bitAddr)
@@ -158,8 +171,8 @@ namespace RobotWeld2.Motions
                 return _mb.CheckAxisRun();
             }
             else
-            { 
-                return false; 
+            {
+                return false;
             }
         }
 
@@ -170,6 +183,7 @@ namespace RobotWeld2.Motions
         {
             _threadFlag = false;
             _iothreadFlag = false;
+            LaserDrives.LaserOff();
         }
 
         //
@@ -177,7 +191,7 @@ namespace RobotWeld2.Motions
         //
         public void RunHandWheel()
         {
-            _threadFlag = false;
+            StopAllThread();
             Thread.Sleep(10);
             wthread = new Thread(HandThread)
             {
@@ -335,7 +349,7 @@ namespace RobotWeld2.Motions
         //
         public void RunResetAxis()
         {
-            _threadFlag = false;
+            StopAllThread();
             Thread.Sleep(10);
 
             wthread = new Thread(ResetThread)
@@ -360,10 +374,63 @@ namespace RobotWeld2.Motions
         //
         // THREAD: Leap Frog to the position
         //
+        public bool RunHandLeap(int[] pts, double moveSpeed, double synAcc = 0.5)
+        {
+            //_threadFlag = false;
+            Thread.Sleep(5);
+
+            HandLeapFrog hlf = new(this);
+            hlf.SetParameter(pts, moveSpeed, synAcc);
+            wthread = new Thread(hlf.HandLeapThread)
+            {
+                Name = nameof(RunLeap),
+                IsBackground = true,
+            };
+            wthread.Start();
+
+            return true;
+        }
+
+        class HandLeapFrog : MotionOperate
+        {
+            int[]? pts;
+            double moveSpeed;
+            double synAcc;
+
+            public HandLeapFrog(MotionOperate mo)
+            {
+                this._mb = mo._mb;
+                this.vm = mo.vm;
+                this.methodName = mo.methodName;
+            }
+
+            public void SetParameter(int[] pts, double moveSpeed, double synAcc = 0.5)
+            {
+                this.pts = pts;
+                this.moveSpeed = moveSpeed;
+                this.synAcc = synAcc;
+            }
+
+            public void HandLeapThread()
+            {
+                if (pts != null)
+                {
+                    _mutex.WaitOne(3000);
+                    _mb.FlyMove(pts, moveSpeed, synAcc);
+                    _mutex.ReleaseMutex();
+                }
+                else
+                {
+                    DaemonFile.AddInfo("运动参数错误");
+                }
+            }
+        }
+
+        //
+        // THREAD: Leap Frog to the position
+        //
         public bool RunLeap(int[] pts, double moveSpeed, double synAcc = 0.5)
         {
-            if (wthread != null && wthread.IsAlive) return false;
-
             _threadFlag = false;
             Thread.Sleep(5);
 
@@ -421,7 +488,7 @@ namespace RobotWeld2.Motions
         {
             if (wthread != null && wthread.IsAlive) return false;
 
-            _threadFlag = false;
+            //_threadFlag = false;
             Thread.Sleep(5);
 
             Arrive ar = new(this);
@@ -464,7 +531,7 @@ namespace RobotWeld2.Motions
                     _mb.FlyMove(pts, moveSpeed, synAcc);
                     _mutex.ReleaseMutex();
 
-                    FinAction(9);
+                    FinAction("arrive");
                 }
                 else
                 {
@@ -499,10 +566,13 @@ namespace RobotWeld2.Motions
 
         class WeldTrace : MotionOperate
         {
-            List<int[]>? ptsList;
-            double WeldSpeed;
-            double synAcc = 0.5;
-            int laserPower;
+            private List<int[]>? ptsList;
+            private LaserParameter? lp;
+            private double WeldSpeed;
+            private double synAcc = 0.5;
+            private int laserPower;
+            private int maxPower;
+            private double powerPercent;
 
             public WeldTrace(MotionOperate mo)
             {
@@ -510,6 +580,7 @@ namespace RobotWeld2.Motions
                 this._laser = mo._laser;
                 this.vm = mo.vm;
                 this.methodName = mo.methodName;
+                this.lp = mo._laserParameter;
             }
 
             public void SetParameter(int laserPower, List<int[]> ptsList, double WeldSpeed,
@@ -519,20 +590,29 @@ namespace RobotWeld2.Motions
                 this.ptsList = ptsList;
                 this.WeldSpeed = WeldSpeed;
                 this.synAcc = synAcc;
+
+                if (lp != null && lp.MaxPower > 0)
+                {
+                    this.maxPower = lp.MaxPower;
+                    powerPercent = (double)laserPower / (double)maxPower;
+                }
             }
 
             public void WeldThread()
             {
                 if (ptsList != null && ptsList.Count > 0)
                 {
-                    _laser.LaserOn(laserPower);
-
                     _mutex.WaitOne(3000);
-                    _mb.WeldMove(ptsList, WeldSpeed, synAcc);
-                    _mutex.ReleaseMutex();
+                    _mb.FlyMove(ptsList[0], WeldSpeed, synAcc);
+                    
+                    _laser.LaserOn(powerPercent);
 
-                    _laser.LaserOff();
-                    FinAction(8);
+                    _mb.WeldMove(ptsList, WeldSpeed, synAcc);
+
+                    _mutex.ReleaseMutex();
+                    LaserDrives.LaserOff();
+
+                    FinAction("weld");
                 }
                 else
                 {
@@ -568,12 +648,15 @@ namespace RobotWeld2.Motions
 
         class FlyWeldTrace : MotionOperate
         {
-            List<int[]>? ptsList;
-            double WeldSpeed;
-            double moveSpeed;
-            int[]? pts;
-            double synAcc = 0.5;
-            int laserPower;
+            private List<int[]>? ptsList;
+            private LaserParameter? lp;
+            private double WeldSpeed;
+            private double moveSpeed;
+            private int[]? pts;
+            private double synAcc = 0.5;
+            private int laserPower;
+            private int maxPower;
+            private double powerPercent;
 
             public FlyWeldTrace(MotionOperate mo)
             {
@@ -581,6 +664,7 @@ namespace RobotWeld2.Motions
                 this._laser = mo._laser;
                 this.vm = mo.vm;
                 this.methodName = mo.methodName;
+                this.lp = mo._laserParameter;
             }
 
             public void SetParameter(int laserPower, List<int[]> ptsList, double WeldSpeed,
@@ -592,6 +676,12 @@ namespace RobotWeld2.Motions
                 this.pts = pts;
                 this.moveSpeed = moveSpeed;
                 this.synAcc = synAcc;
+
+                if (lp != null && lp.MaxPower > 0)
+                {
+                    this.maxPower = lp.MaxPower;
+                    powerPercent = (double)laserPower / (double)maxPower;
+                }
             }
 
             public void FlyWeldThread()
@@ -600,12 +690,16 @@ namespace RobotWeld2.Motions
                 {
                     _mutex.WaitOne(3000);
                     _mb.FlyMove(pts, moveSpeed, synAcc);
-                    _laser.LaserOn(laserPower);
+                    OpenAir();
+                    _mb.FlyMove(ptsList[0], 0.5*moveSpeed, synAcc);
+
+                    _laser.LaserOn(powerPercent);
+
                     _mb.WeldMove(ptsList, WeldSpeed, synAcc);
                     _mutex.ReleaseMutex();
 
-                    _laser.LaserOff();
-                    FinAction(10);
+                    LaserDrives.LaserOff();
+                    FinAction("flyweld");
                 }
                 else
                 {
@@ -637,7 +731,7 @@ namespace RobotWeld2.Motions
             sThread.Start();
         }
 
-        protected void FinAction(int iAct)
+        protected void FinAction(string iAct)
         {
             FinishDelegate act;
 
@@ -657,12 +751,6 @@ namespace RobotWeld2.Motions
                 act = new(vm.Action);
                 act(iActNum);
             }
-        }
-
-        private static bool SectFinish;
-        public static void SectionFinish()
-        {
-            SectFinish = true;
         }
 
         private VaneWheelTrace? vm;
@@ -690,7 +778,6 @@ namespace RobotWeld2.Motions
             public void ScanThread()
             {
                 if (bitAddr == null) { return; }
-                SectFinish = true;
 
                 _iothreadFlag = true;
                 int[] iActNum = new int[bitAddr.Length];
@@ -702,18 +789,15 @@ namespace RobotWeld2.Motions
                         iActNum[i] = 0;
                     }
 
-                    if (SectFinish)
+                    for (int i = 0; i < bitAddr.Length; i++)
                     {
-                        for (int i = 0; i < bitAddr.Length; i++)
+                        if (_mb.ReadIoBit(bitAddr[i]))
                         {
-                            if (_mb.ReadIoBit(bitAddr[i]))
-                            {
-                                iActNum[i] = 1;
-                            }
-                            else
-                            {
-                                iActNum[i] = 0;
-                            }
+                            iActNum[i] = 1;
+                        }
+                        else
+                        {
+                            iActNum[i] = 0;
                         }
                     }
 
@@ -722,21 +806,15 @@ namespace RobotWeld2.Motions
                         if (iActNum[i] != 0)
                         {
                             IoAction(iActNum);
-                            SectFinish = false;
-                        }
-                        else
-                        {
-                            SectFinish = true;
                         }
                     }
-
 
                     if (!_iothreadFlag)
                     {
                         return;
                     }
 
-                    Thread.Sleep(10);
+                    Thread.Sleep(20);
                 }
             }
         }
@@ -772,6 +850,6 @@ namespace RobotWeld2.Motions
     public delegate void FlipLOnOffDelegate();
     public delegate void SetCrdDelegate(int x, int y, int z);
     public delegate void ActionDelegate(int[] iActNum);
-    public delegate void FinishDelegate(int iAct);
+    public delegate void FinishDelegate(string iAct);
 
 }

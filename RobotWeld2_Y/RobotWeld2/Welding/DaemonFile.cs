@@ -56,7 +56,7 @@ namespace RobotWeld2.Welding
         private string _errMsg = string.Empty;
         private static string _openMsg = string.Empty;
 
-        private bool _pmFlag;
+        private bool _pmFlag;    // true : Prepare buttion has been checked.
 
         public DaemonFile(MainWindowViewModel viewModel)
         {
@@ -209,6 +209,7 @@ namespace RobotWeld2.Welding
             set { _sheetThickness = value; }
         }
 
+        // True : when prepared of run trace is checked
         public bool PmFlag
         {
             get { return _pmFlag; }
@@ -509,7 +510,7 @@ namespace RobotWeld2.Welding
             set { _laserParameter = value; }
         }
 
-        public void DisplyPointList(List<Point> pointList)
+        public void DisplayPointList(List<Point> pointList)
         {
             string pstring = string.Format("{0,-8}\t{1,-20}{2,-20}{3,-18}{4,5}{5,8}{6,7}\n\n", "序号", "X", "Y", "Z", "线型", "开关状态", "功率");
             for (int i = 0; i < pointList.Count; i++)
@@ -520,7 +521,7 @@ namespace RobotWeld2.Welding
             _viewModel.PointList = pstring;
         }
 
-        public void DisplyPointList(List<Point> pointList, int ptIndex)
+        public void DisplayPointList(List<Point> pointList, int ptIndex)
         {
             string pstring = string.Format("{0,-8}\t{1,-20}{2,-20}{3,-18}{4,5}{5,8}{6,7}\n\n", "序号", "X", "Y", "Z", "线型", "开关状态", "功率");
             for (int i = 0; i < pointList.Count; i++)
@@ -550,6 +551,17 @@ namespace RobotWeld2.Welding
                 _viewModel.PmText = "准备运行";
                 _viewModel.PmFlag = true;
             }
+        }
+
+        public int GetPointIndex()
+        {
+            _pointIndex = _viewModel.PointInfo;
+            return _pointIndex;
+        }
+
+        public void SetPointIndex(int pd)
+        {
+            _pointIndex = _viewModel.PointInfo = pd;
         }
     }
 }

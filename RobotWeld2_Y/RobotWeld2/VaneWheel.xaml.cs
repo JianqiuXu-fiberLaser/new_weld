@@ -43,7 +43,11 @@ namespace RobotWeld2
             ExtraController extraController = new();
             extraController.ConnectPLC();
             Thread.Sleep(100);    // waiting for connection.
-            extraController.SelfResetTurnOn(ActionIndex.MANUAL_MODE);
+            extraController.LongSelfResetTurnOn(ActionIndex.LEFT_OFF_READY);
+            Thread.Sleep(20);
+            extraController.LongSelfResetTurnOn(ActionIndex.RIGHT_OFF_READY);
+            Thread.Sleep(20);
+            extraController.LongSelfResetTurnOn(ActionIndex.MANUAL_MODE);
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

@@ -1,10 +1,5 @@
 ﻿using RobotWeld2.Motions;
 using RobotWeld2.Welding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RobotWeld2.GetTrace
 {
@@ -27,7 +22,7 @@ namespace RobotWeld2.GetTrace
 
         public void GotoPosition(int[] ptxyz)
         {
-            _mo?.RunLeap(ptxyz, moveSpeed);
+            _mo?.RunHandLeap(ptxyz, moveSpeed);
         }
     }
 }

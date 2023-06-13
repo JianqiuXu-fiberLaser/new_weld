@@ -34,14 +34,9 @@ namespace RobotWeld2.GetTrace
 
         public void Run(Tracetype tpy, List<Point> points)
         {
-            if (dmFile == null || !dmFile.PmFlag)
+            if (_mo != null && _mo.IsAxesRun())
             {
-                MotionOperate.StopAllThread();
-            }
-            else if (_mo != null)
-            {
-                if (_mo.IsAxesRun())
-                    return;
+                return;
             }
 
             switch (tpy)

@@ -109,9 +109,9 @@ namespace RobotWeld2.AlgorithmsBase
         /// <param name="mty"> MemType </param>
         /// <param name="addr"> addr </param>
         /// <returns></returns>
-        public bool GetFromPLC(MemType mty, int addr)
+        public bool? GetFromPLC(MemType mty, int addr)
         {
-            bool ret = true;
+            bool? ret;
             if (mty == MemType.M)
             {
                 lock (_lock)
@@ -121,7 +121,15 @@ namespace RobotWeld2.AlgorithmsBase
                     {
                         ret = vars[0];
                     }
+                    else
+                    {
+                        ret = null;
+                    }
                 }
+            }
+            else
+            {
+                ret = null;
             }
 
             return ret;

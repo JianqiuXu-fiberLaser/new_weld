@@ -62,6 +62,7 @@ namespace RobotWeld2.Welding
             potsLeft = new List<int[]>();
             potsRight = new List<int[]>();
             PrepareData(points, potsLeft, out lpLeft, potsRight, out lpRight);
+            moveTaskFinish = true;
 
             _mo?.SetActionMethod(this);
             CheckPosition();
@@ -71,18 +72,26 @@ namespace RobotWeld2.Welding
             _mo?.ScanAction(bitAddr);
         }
 
+        private bool moveTaskFinish;
         public void Action(int[] iActNum)
         {
-            //GiveMsg.Show(nws.ToString());
+            // if there is a task to run, do nothing
+            if (!moveTaskFinish)
+            {
+                return;
+            }
+
             if (nws == nowState.RESET_POS || nws == nowState.LEFT_FINISH || nws == nowState.RIGHT_FINISH)
             {
                 if (iActNum[0] == 1)
                 {
                     FlyWeld_Left();
+                    moveTaskFinish = false;
                 }
                 else if (iActNum[2] == 1)
                 {
                     FlyWeld_Right();
+                    moveTaskFinish = false;
                 }
             }
             else if (nws == nowState.LEFT_WELD)
@@ -90,14 +99,17 @@ namespace RobotWeld2.Welding
                 if (iActNum[0] == 1 && iActNum[1] == 1)
                 {
                     Weld_Left_NoEcho();
+                    moveTaskFinish = false;
                 }
                 if (iActNum[0] == 1)
                 {
                     Weld_Left();
+                    moveTaskFinish = false;
                 }
                 else if (iActNum[1] == 1)
                 {
                     Echo_Left();
+                    moveTaskFinish = false;
                 }
             }
             else if (nws == nowState.RIGHT_WELD)
@@ -105,93 +117,39 @@ namespace RobotWeld2.Welding
                 if (iActNum[2] == 1 && iActNum[3] == 1)
                 {
                     Weld_Right_NoEcho();
+                    moveTaskFinish = false;
                 }
                 else if (iActNum[2] == 1)
                 {
                     Weld_Right();
+                    moveTaskFinish = false;
                 }
                 else if (iActNum[3] == 1)
                 {
                     Echo_Right();
+                    moveTaskFinish = false;
                 }
             }
         }
 
-        public void FinAction(int iAct)
+        //
+        // When the Task is finised, no run thread exist.
+        //
+        public void FinAction(string iAct)
         {
             switch (iAct)
             {
-                case 8:    // Weld finished
+                case "weld":    // Weld finished
                     DoWeldFin();
                     break;
-                case 9:    // fly finished
+                case "arrive":    // fly finished
                     DoFlyFin();
                     break;
-                case 10:    // fly weld finishe
+                case "flyweld":    // fly weld finishe
                     DoFlyWeldFin();
                     break;
                 default:
                     break;
-            }
-        }
-
-        public void DoBit12()
-        {
-            if (nws == nowState.LEFT_WELD || nws == nowState.LEFT_FINISH)
-            {
-                nws = nowState.LEFT_WELD;
-                dmFile?.SetInputPower(lpLeft);
-
-                Weld_Left();
-                Thread.Sleep(10);
-            }
-            else if (nws == nowState.RESET_POS || nws == nowState.RIGHT_FINISH)
-            {
-                nws = nowState.LEFT_WELD;
-                dmFile?.SetInputPower(lpLeft);
-
-                FlyWeld_Left();
-                Thread.Sleep(10);
-            }
-        }
-
-        public void DoBit13()
-        {
-            if (nws == nowState.LEFT_WELD)
-            {
-                nws = nowState.LEFT_FINISH;
-                CloseAir();
-                Echo_Left();
-            }
-        }
-
-        public void DoBit14()
-        {
-            if (nws == nowState.RIGHT_WELD || nws == nowState.RIGHT_FINISH)
-            {
-                nws = nowState.RIGHT_WELD;
-                dmFile?.SetInputPower(lpRight);
-
-                Weld_Right();
-                Thread.Sleep(10);
-            }
-            else if (nws == nowState.RESET_POS || nws == nowState.LEFT_FINISH)
-            {
-                nws = nowState.RIGHT_WELD;
-                dmFile?.SetInputPower(lpRight);
-
-                FlyWeld_Right();
-                Thread.Sleep(10);
-            }
-        }
-
-        public void DoBit15()
-        {
-            if (nws == nowState.RIGHT_WELD)
-            {
-                nws = nowState.RIGHT_FINISH;
-                CloseAir();
-                Echo_Right();
             }
         }
 
@@ -214,12 +172,13 @@ namespace RobotWeld2.Welding
             if (nws == nowState.LEFT_WELD)
             {
                 _mo?.EchoBit(13);
-                MotionOperate.SectionFinish();
+                moveTaskFinish = true;
             }
+
             if (nws == nowState.RIGHT_WELD)
             {
                 _mo?.EchoBit(15);
-                MotionOperate.SectionFinish();
+                moveTaskFinish = true;
             }
         }
 
@@ -228,12 +187,12 @@ namespace RobotWeld2.Welding
             if (nws == nowState.LEFT_WELD)
             {
                 _mo?.EchoBit(13);
-                MotionOperate.SectionFinish();
+                moveTaskFinish = true;
             }
             if (nws == nowState.RIGHT_WELD)
             {
                 _mo?.EchoBit(15);
-                MotionOperate.SectionFinish();
+                moveTaskFinish = true;
             }
         }
 
@@ -242,16 +201,16 @@ namespace RobotWeld2.Welding
             if (nws == nowState.LEFT_WELD)
             {
                 _mo?.EchoBit(13);
-                nws = nowState.LEFT_FINISH;
-                MotionOperate.SectionFinish();
                 CloseAir();
+                nws = nowState.LEFT_FINISH;
+                moveTaskFinish = true;
             }
             if (nws == nowState.RIGHT_WELD)
             {
                 _mo?.EchoBit(15);
-                nws = nowState.RIGHT_FINISH;
-                MotionOperate.SectionFinish();
                 CloseAir();
+                nws = nowState.RIGHT_FINISH;
+                moveTaskFinish = true;
             }
         }
 
@@ -268,6 +227,8 @@ namespace RobotWeld2.Welding
                 {
                     ptlist.Add(potsLeft[i]);
                 }
+
+                dmFile?.SetInputPower(lpLeft);
                 _mo?.RunWeld(lpLeft, ptlist, WeldSpeed);
             }
         }
@@ -285,6 +246,8 @@ namespace RobotWeld2.Welding
                 {
                     ptlist.Add(potsLeft[i]);
                 }
+
+                dmFile?.SetInputPower(lpLeft);
                 _mo?.RunWeld(lpLeft, ptlist, WeldSpeed);
             }
         }
@@ -299,9 +262,11 @@ namespace RobotWeld2.Welding
             {
                 List<int[]> ptlist = new List<int[]>();
                 for (int i = 1; i < potsRight.Count; i++)
-                    ptlist.Add(potsRight[i]);
                 {
+                    ptlist.Add(potsRight[i]);
                 }
+
+                dmFile?.SetInputPower(lpRight);
                 _mo?.RunWeld(lpRight, ptlist, WeldSpeed);
             }
         }
@@ -316,9 +281,11 @@ namespace RobotWeld2.Welding
             {
                 List<int[]> ptlist = new List<int[]>();
                 for (int i = 1; i < potsRight.Count; i++)
-                    ptlist.Add(potsRight[i]);
                 {
+                    ptlist.Add(potsRight[i]);
                 }
+
+                dmFile?.SetInputPower(lpRight);
                 _mo?.RunWeld(lpRight, ptlist, WeldSpeed);
             }
         }
@@ -327,6 +294,7 @@ namespace RobotWeld2.Welding
         {
             _mo?.EchoBit(12);
             nws = nowState.LEFT_WELD;
+            //_mo?.OpenAir();
             if (potsLeft != null)
             {
                 List<int[]> ptlist = new List<int[]>();
@@ -334,6 +302,8 @@ namespace RobotWeld2.Welding
                 {
                     ptlist.Add(potsLeft[i]);
                 }
+
+                dmFile?.SetInputPower(lpLeft);
                 _mo?.RunFlyWeld(lpLeft, ptlist, WeldSpeed, potsLeft[0], moveSpeed);
             }
         }
@@ -342,6 +312,7 @@ namespace RobotWeld2.Welding
         {
             _mo?.EchoBit(14);
             nws = nowState.RIGHT_WELD;
+            //_mo?.OpenAir();
             if (potsRight != null)
             {
                 List<int[]> ptlist = new List<int[]>();
@@ -349,13 +320,14 @@ namespace RobotWeld2.Welding
                 {
                     ptlist.Add(potsRight[i]);
                 }
+
+                dmFile?.SetInputPower(lpRight);
                 _mo?.RunFlyWeld(lpRight, ptlist, WeldSpeed, potsRight[0], moveSpeed);
             }
         }
 
         private void Echo_Left()
         {
-            //nws = nowState.LEFT_FINISH;
             if (potsLeft != null)
             {
                 _mo?.RunArrive(potsLeft[0], 0.8 * moveSpeed);
@@ -364,19 +336,18 @@ namespace RobotWeld2.Welding
 
         private void Echo_Right()
         {
-            nws = nowState.RIGHT_FINISH;
             if (potsRight != null)
                 _mo?.RunArrive(potsRight[0], 0.8 * moveSpeed);
         }
 
         private void CloseAir()
         {
-            _mo?.TurnOnBit(8);
+            _mo?.CloseAir();
         }
 
         private void OpenAir()
         {
-            _mo?.TurnOffBit(8);
+            _mo?.OpenAir();
         }
 
         private void PrepareData(List<Point> ptlist, List<int[]> potsLeft, out int lpLeft,
@@ -408,7 +379,7 @@ namespace RobotWeld2.Welding
                     potsLeft.Add(ptxyz);
                 }
 
-                lpRight = ptlist[LeftCount + 1].LaserPointPower;
+                lpRight = ptlist[LeftCount + 2].LaserPointPower;
                 for (int i = 0; i <= RightCount; i++)
                 {
                     int[] ptxyz = new int[3];

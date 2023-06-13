@@ -193,7 +193,7 @@ namespace RobotWeld2
             if (element != null)
             {
                 element.CaptureMouse();
-                plcAirValve.TurnOn(ActionIndex.Y1_POS);
+                plcAirValve.TurnOn(ActionIndex.Y1_NEG);
             }
         }
 
@@ -203,7 +203,7 @@ namespace RobotWeld2
             if (element != null)
             {
                 element.ReleaseMouseCapture();
-                plcAirValve.TurnOff(ActionIndex.Y1_POS);
+                plcAirValve.TurnOff(ActionIndex.Y1_NEG);
             }
         }
 
@@ -213,7 +213,7 @@ namespace RobotWeld2
             if (element != null)
             {
                 element.CaptureMouse();
-                plcAirValve.TurnOn(ActionIndex.Y2_POS);
+                plcAirValve.TurnOn(ActionIndex.Y2_NEG);
             }
         }
 
@@ -223,7 +223,7 @@ namespace RobotWeld2
             if (element != null)
             {
                 element.ReleaseMouseCapture();
-                plcAirValve.TurnOff(ActionIndex.Y2_POS);
+                plcAirValve.TurnOff(ActionIndex.Y2_NEG);
             }
         }
 
@@ -238,7 +238,7 @@ namespace RobotWeld2
             if (element != null)
             {
                 element.CaptureMouse();
-                plcAirValve.TurnOn(ActionIndex.Y1_NEG);
+                plcAirValve.TurnOn(ActionIndex.Y1_POS);
             }
         }
 
@@ -248,7 +248,7 @@ namespace RobotWeld2
             if (element != null)
             {
                 element.ReleaseMouseCapture();
-                plcAirValve.TurnOff(ActionIndex.Y1_NEG);
+                plcAirValve.TurnOff(ActionIndex.Y1_POS);
             }
         }
 
@@ -258,7 +258,7 @@ namespace RobotWeld2
             if (element != null)
             {
                 element.CaptureMouse();
-                plcAirValve.TurnOn(ActionIndex.Y2_NEG);
+                plcAirValve.TurnOn(ActionIndex.Y2_POS);
             }
         }
 
@@ -268,7 +268,7 @@ namespace RobotWeld2
             if (element != null)
             {
                 element.ReleaseMouseCapture();
-                plcAirValve.TurnOff(ActionIndex.Y2_NEG);
+                plcAirValve.TurnOff(ActionIndex.Y2_POS);
             }
         }
 

@@ -26,6 +26,7 @@ namespace RobotWeld2.AppModel
             extraController?.SelfResetTurnOn(ActionIndex.AUTO_MODE);
             Thread.Sleep(20);
             extraController?.SelfResetTurnOn(ati);
+            Thread.Sleep(20);
             extraController?.CheckPreparedState(ati);
         }
 

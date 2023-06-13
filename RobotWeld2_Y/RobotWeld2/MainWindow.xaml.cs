@@ -72,6 +72,7 @@ namespace RobotWeld2
             if (e.Command == ApplicationCommands.Close)
             {
                 MotionOperate.StopAllThread();
+                ChkPre.StopChkThread();
                 daemonFile?.Close();
                 Close();
             }
@@ -113,7 +114,6 @@ namespace RobotWeld2
                     }
                     else
                     {
-                        //dmModel.RunTrace(Tracetype.VANE_WHEEL);
                         dmModel.WeldTrace(Tracetype.VANE_WHEEL);
                     }
                 }
@@ -142,6 +142,13 @@ namespace RobotWeld2
 
             if (e.Command == MainWindowViewModel.IntersectCommand)
             {
+                if (daemonFile != null && dmModel != null)
+                {
+                    Intersect intersect = new(daemonFile);
+                    intersect.ShowDialog();
+                    daemonFile.SetInputPower(false);
+                    dmModel.TakePoints();
+                }
             }
 
             if (e.Command == MainWindowViewModel.TopTraceCommand)
@@ -183,7 +190,11 @@ namespace RobotWeld2
                 }
 
                 if ((daemonFile is not null) && (mainViewModel is not null))
+                {
                     daemonFile.SetParameter();
+                    MotionOperate.StopAllThread();
+                    daemonFile.PreparedState(false);
+                }
             }
 
             if (e.Command == MainWindowViewModel.AutoParameterCommand)
@@ -241,6 +252,7 @@ namespace RobotWeld2
         private void WindowClose_Click(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MotionOperate.StopAllThread();
+            ChkPre.StopChkThread();
             daemonFile?.Close();
             e.Cancel = false;
         }

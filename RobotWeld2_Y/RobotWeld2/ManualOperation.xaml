@@ -70,11 +70,11 @@
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                     Margin="0,0,10,0">
                             <Label Content="开关地址M" FontFamily="Microsoft YaHei UI" FontSize="16"/>
-                            <TextBox Name="SWaddrees" Text="{Binding ActMemory, Mode=TwoWay}" FontFamily="Microsoft YaHei UI" FontSize="16"
+                            <TextBox Name="SWaddress" Text="{Binding ActMemory, Mode=TwoWay}" FontFamily="Microsoft YaHei UI" FontSize="16"
                                                           InputMethod.IsInputMethodEnabled="False"
-                                     GotFocus="SWaddrees_GotFocus" 
-                                     PreviewMouseLeftButtonDown="SWaddrees_PreviewMouseLeftButtonDown" 
-                                     KeyDown="SWaddrees_KeyDown"/>
+                                     GotFocus="SWaddress_GotFocus" 
+                                     PreviewMouseLeftButtonDown="SWaddress_PreviewMouseLeftButtonDown" 
+                                     KeyDown="SWaddress_KeyDown"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                     Margin="0,0,10,0">

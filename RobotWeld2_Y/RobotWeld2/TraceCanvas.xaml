@@ -56,7 +56,7 @@
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=PmFlag}" Value="true">
                                 <Setter Property="Foreground" Value="DarkGreen"/>
-                                <Setter Property="Opacity" Value="0.5"/>
+                                <Setter Property="Opacity" Value="1.0"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Path=PmFlag}" Value="false">
                                 <Setter Property="Foreground" Value="Gray"/>

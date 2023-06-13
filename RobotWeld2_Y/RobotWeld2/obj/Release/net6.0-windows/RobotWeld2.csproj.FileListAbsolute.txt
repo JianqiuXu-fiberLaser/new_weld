@@ -289,3 +289,7 @@ C:\Users\86137\source\repos\RobotWeld2\RobotWeld2\obj\Release\net6.0-windows\Rob
 C:\Users\86137\source\repos\RobotWeld2\RobotWeld2\obj\Release\net6.0-windows\RobotWeld2.csproj.CopyComplete
 C:\Users\86137\source\repos\RobotWeld2\RobotWeld2\obj\Release\net6.0-windows\RobotWeld2.genruntimeconfig.cache
 C:\Users\86137\source\repos\RobotWeld2\RobotWeld2\obj\Release\net6.0-windows\ref\RobotWeld2.dll
+C:\Users\86137\source\repos\RobotWeld2\RobotWeld2\obj\Release\net6.0-windows\Intersect.g.cs
+C:\Users\86137\source\repos\RobotWeld2\RobotWeld2\obj\Release\net6.0-windows\Intersect.baml
+C:\Users\admin\source\repos\RobotWeld2\RobotWeld2\obj\Release\net6.0-windows\Intersect.g.cs
+C:\Users\admin\source\repos\RobotWeld2\RobotWeld2\obj\Release\net6.0-windows\Intersect.baml

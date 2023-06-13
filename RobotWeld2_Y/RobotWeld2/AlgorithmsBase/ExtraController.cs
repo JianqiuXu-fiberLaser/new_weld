@@ -1,4 +1,5 @@
-﻿using RobotWeld2.AppModel;
+﻿using RobotWeld2.AlgorithmsBase;
+using RobotWeld2.AppModel;
 using RobotWeld2.ViewModel;
 using RobotWeld2.Welding;
 using System.Collections.Generic;
@@ -13,7 +14,9 @@ namespace RobotWeld2.AlgorithmsBase
     /// </summary>
     public class ExtraController
     {
-        private static PlcLibrary? plc;
+        protected static PlcLibrary? plc;
+        private static ChkPre? ck;
+        private static Thread? cthread;
         private bool _scanAlarm;
         private bool _scanIO;
 
@@ -33,7 +36,7 @@ namespace RobotWeld2.AlgorithmsBase
         private DaemonFile? dmFile;
         private MainWindowViewModel? _mainViewModel;
         private PlcIoViewModel? plcViewModel;
-        private AirValveViewModel? airValveViewModel;
+        public AirValveViewModel? airValveViewModel;
         private ManualOperationViewModel? manualViewModel;
 
         public ExtraController()
@@ -75,6 +78,10 @@ namespace RobotWeld2.AlgorithmsBase
             if (var.HasValue && var.Value == true)
             {
                 return true;
+            }
+            else if (!var.HasValue)
+            {
+                return false;
             }
             else
             {
@@ -144,6 +151,24 @@ namespace RobotWeld2.AlgorithmsBase
             {
                 TurnOn(ati);
                 Thread.Sleep(10);
+                TurnOff(ati);
+            })
+            { IsBackground = true, };
+            t.Start();
+        }
+
+        public void LongSelfResetTurnOn(ActionIndex ati)
+        {
+            if (plc == null)
+            {
+                plc = new PlcLibrary();
+                ConnectPLC();
+            }
+
+            Thread t = new(() =>
+            {
+                TurnOn(ati);
+                Thread.Sleep(2000);
                 TurnOff(ati);
             })
             { IsBackground = true, };
@@ -419,79 +444,109 @@ namespace RobotWeld2.AlgorithmsBase
 
         public void CheckPreparedState(ActionIndex ati)
         {
-            if (ati != ActionIndex.LEFT_RESET && ati != ActionIndex.RIGHT_RESET)
+            if (ati == ActionIndex.LEFT_RESET)
+            {
+                SelfResetTurnOn(ActionIndex.LEFT_READY);
+            }
+            else if (ati == ActionIndex.RIGHT_RESET)
+            {
+                SelfResetTurnOn(ActionIndex.RIGHT_READY);
+            }
+            else
             {
                 return;
             }
 
-            ChkPre ck = new(this);
-            ck.SetParameter((int)ati);
-            Thread cthread = new(ck.CheckPstate)
-            { IsBackground = true };
-            cthread.Start();
+            ck ??= new(this);
+            if (cthread == null)
+            {
+                cthread = new(ck.CheckPstate)
+                {
+                    Name = nameof(CheckPreparedState),
+                    IsBackground = false,
+                };
+
+                cthread.Start();
+            }
         }
 
-        protected void SetReady(int ati)
+        protected void SetReady(int ati, bool bs)
         {
-            if (ati == (int)ActionIndex.LEFT_RESET)
+            if (ati == (int)ActionIndex.LEFT_RESET && airValveViewModel != null)
             {
-                if (airValveViewModel != null)
+                if (bs)
+                {
                     airValveViewModel.Lreset = System.Windows.Media.Colors.DarkGreen;
-
-                SelfResetTurnOn(ActionIndex.LEFT_READY);
+                }
+                else
+                {
+                    airValveViewModel.Lreset = System.Windows.Media.Colors.Transparent;
+                }
             }
 
-            if (ati == (int)ActionIndex.RIGHT_RESET)
+            if (ati == (int)ActionIndex.RIGHT_RESET && airValveViewModel != null)
             {
-                if (airValveViewModel != null)
+                if (bs)
+                {
                     airValveViewModel.Rreset = System.Windows.Media.Colors.DarkGreen;
-
-                SelfResetTurnOn(ActionIndex.RIGHT_READY);
+                }
+                else
+                {
+                    airValveViewModel.Rreset = System.Windows.Media.Colors.Transparent;
+                }
             }
 
         }
+    }
 
-        class ChkPre : ExtraController
+    /// <summary>
+    /// THREAD to check auto-run ready state
+    /// </summary>
+    public class ChkPre : ExtraController
+    {
+        public static bool _stopChkThread;
+        public static void StopChkThread()
         {
-            private AirValveViewModel? AirValveViewModel;
-            private int ati;
-            private int resetAddr;
-            public ChkPre(ExtraController exc)
-            {
-                this.airValveViewModel = exc.airValveViewModel;
-            }
+            _stopChkThread = true;
+        }
 
-            public void SetParameter(int ati)
-            {
-                this.ati = ati;
-                if (ati == (int)ActionIndex.LEFT_RESET)
-                {
-                    resetAddr = 2036;
-                }
-                else if (ati == (int)ActionIndex.RIGHT_RESET)
-                {
-                    resetAddr = 2536;
-                }
-            }
+        public ChkPre(ExtraController exc)
+        {
+            this.airValveViewModel = exc.airValveViewModel;
+        }
 
-            public void CheckPstate()
+        public void CheckPstate()
+        {
+            while (true)
             {
-                PlcLibrary _plc = new();
-                int chktime = 0;
-                while (true)
+                if (GetState(ActionIndex.LEFT_READY_STATE))
                 {
-                    chktime++;
-                    if (_plc.GetFromPLC(MemType.M, resetAddr))
-                    {
-                        SetReady(ati);
-                        break;
-                    }
-                    else if (chktime >= 10)
-                    {
-                        break;
-                    }
-                    Thread.Sleep(500);
+                    SetReady((int)ActionIndex.LEFT_RESET, true);
                 }
+                else
+                {
+                    SetReady((int)ActionIndex.LEFT_RESET, false);
+                }
+
+                Thread.Sleep(20);
+                if (GetState(ActionIndex.RIGHT_REDAY_STATE))
+                {
+                    SetReady((int)ActionIndex.RIGHT_RESET, true);
+                }
+                else
+                {
+                    SetReady((int)ActionIndex.RIGHT_RESET, false);
+                }
+
+                if (_stopChkThread)
+                {
+                    SetReady((int)ActionIndex.LEFT_RESET, false);
+                    Thread.Sleep(20);
+                    SetReady((int)ActionIndex.RIGHT_RESET, false);
+                    break;
+                }
+
+                Thread.Sleep(1000);
             }
         }
     }
@@ -538,8 +593,12 @@ namespace RobotWeld2.AlgorithmsBase
         C0_POSIT = 1369,
 
         // Button for working preparation
+        LEFT_READY_STATE = 2000,
         LEFT_READY = 2072,
+        LEFT_OFF_READY = 2073,
+        RIGHT_REDAY_STATE = 2500,
         RIGHT_READY = 2572,
+        RIGHT_OFF_READY = 2573,
         LEFT_RESET = 2070,
         RIGHT_RESET = 2570,
         AUTO_MODE = 200,
