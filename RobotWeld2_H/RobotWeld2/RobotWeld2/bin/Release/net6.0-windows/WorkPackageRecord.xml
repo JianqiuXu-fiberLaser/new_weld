@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--The record file for the sun flower welding system-->
+<Projects>
+  <project>
+    <vane>99989796</vane>
+    <intersect>95949392</intersect>
+    <top>0</top>
+    <stage>0</stage>
+    <spiral>0</spiral>
+    <free>0</free>
+    <current>intersect</current>
+  </project>
+</Projects>
