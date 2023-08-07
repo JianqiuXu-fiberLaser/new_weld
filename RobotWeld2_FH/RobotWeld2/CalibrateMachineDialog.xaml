@@ -1,0 +1,147 @@
+﻿<Window x:Class="RobotWeld2.CalibrateMachineDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RobotWeld2"
+        xmlns:vm="clr-namespace:RobotWeld2.ViewModel"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" Background="Transparent"
+        Title="运动系统初始化" Height="430" Width="750" ResizeMode="NoResize"
+        Icon="/Images/sunflower.ico">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.DataContext>
+        <vm:CalibrateMachineViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="ButtonRun">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFA1AEB9" Offset="0"/>
+                        <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                        <GradientStop Color="#FF718597" Offset="0.375"/>
+                        <GradientStop Color="#FF717584" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="3" Background="DarkGray" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                                <Grid Margin="1,1,1,1">
+                                    <Border CornerRadius="3" Background="DarkGreen" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                                        <Polygon x:Name="polygon" Points="0,0 14,6 0,12" VerticalAlignment="Center" Margin="3">
+                                            <Polygon.Fill>
+                                                <SolidColorBrush Color="White" Opacity="0.9"/>
+                                            </Polygon.Fill>
+                                        </Polygon>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <ContentPresenter x:Name="contentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="polygon" Property="Fill" Value="DarkRed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="MidnightBlue" BorderBrush="DarkGray" BorderThickness="1" Opacity="0.95" Margin="0,5,0,0" CornerRadius="10,10,10,10">
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="运动系统初始化"  FontFamily="MicroSoft YaHei UI" FontSize="16" Foreground="White"/>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="1" Background="#7D5F9EA0" Margin="0,5,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45" />
+                <RowDefinition Height="45" />
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="X水平轴"  FontFamily="MicroSoft YaHei UI" FontSize="16" />
+                <Label Content="左限位"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding XNegLimit}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="100" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="右限位"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding XPosLimit}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="100" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="信号方向"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding XDirection}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="25" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="毫米脉冲数"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBox Name="XPulse"  Text="{Binding Path=XPulse, Mode=TwoWay}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="75" Background="White" Padding="0,3,0,0" InputMethod.IsInputMethodEnabled="False" GotFocus="XPulse_GotFocus" PreviewMouseLeftButtonDown="XPulse_PreviewMouseLeftButtonDown" KeyDown="XPulse_KeyDown"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="Y前后轴"  FontFamily="MicroSoft YaHei UI" FontSize="16" />
+                <Label Content="前限位"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding YNegLimit}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="100" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="后限位"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding YPosLimit}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="100" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="信号方向"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding YDirection}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="25" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="毫米脉冲数"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBox Name="YPulse" Text="{Binding Path=YPulse, Mode=TwoWay}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="75" Background="White" Padding="0,3,0,0" InputMethod.IsInputMethodEnabled="False" GotFocus="YPulse_GotFocus" PreviewMouseLeftButtonDown="YPulse_PreviewMouseLeftButtonDown" KeyDown="YPulse_KeyDown"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="Z上下轴"  FontFamily="MicroSoft YaHei UI" FontSize="16" />
+                <Label Content="上限位"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding ZNegLimit}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="100" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="下限位"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding ZPosLimit}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="100" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="信号方向"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding ZDirection}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="25" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="毫米脉冲数"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBox Name="ZPulse" Text="{Binding Path=ZPulse, Mode=TwoWay}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="75" Background="White" Padding="0,3,0,0" InputMethod.IsInputMethodEnabled="False" GotFocus="ZPulse_GotFocus" PreviewMouseLeftButtonDown="ZPulse_PreviewMouseLeftButtonDown" KeyDown="Zpulse_KeyDown"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="A旋转轴"  FontFamily="MicroSoft YaHei UI" FontSize="16" />
+                <Label Content="左限位"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding ANegLimit}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="100" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="右限位"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding APosLimit}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="100" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="信号方向"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBlock Text="{Binding ADirection}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="25" Background="Azure" Padding="0,3,0,0"/>
+                <Label Content="圆周脉冲数"  FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBox Name="APulse" Text="{Binding Path=APulse, Mode=TwoWay}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="75" Background="White" Padding="0,3,0,0" InputMethod.IsInputMethodEnabled="False" GotFocus="APulse_GotFocus" PreviewMouseLeftButtonDown="APulse_PreviewMouseLeftButtonDown" KeyDown="APulse_KeyDown"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <ProgressBar Height="20"  Minimum="0" Maximum="100" Value="{Binding ProgressScale}"/>
+        </Grid>
+        
+        <!-- Buttons -->
+        <Canvas Grid.Row="3" Background="#D3D3D3" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Canvas.Right="25" Canvas.Bottom="25" Orientation="Horizontal">
+                <Button Content="返回" Width="75" Margin="0,0,5,0" Background="White" Click="CancelButton_Click" FontSize="16"/>
+                <Button Content="确认" Width="75" Margin="0,0,5,0" Background="White" Click="ConfirmButton_Click" FontSize="16"/>
+                <Button Content="初始化" Width="75" Margin="0,0,5,0" Background="White" Click="OkButton_Click" FontSize="16"/>
+            </StackPanel>
+        </Canvas>
+    </Grid>
+</Window>

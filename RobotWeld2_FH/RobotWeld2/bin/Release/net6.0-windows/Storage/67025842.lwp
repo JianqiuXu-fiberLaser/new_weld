@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--The record file for the sun flower welding system-->
+<Lasers>
+  <laser>
+    <power>150</power>
+    <frequency>0</frequency>
+    <pulse>0</pulse>
+    <duty>0</duty>
+    <rise>0</rise>
+    <fall>0</fall>
+    <hold>0</hold>
+    <airin>0</airin>
+    <airout>0</airout>
+    <wiretime>0</wiretime>
+    <weldspeed>25</weldspeed>
+    <wobble>0</wobble>
+    <leap>80</leap>
+  </laser>
+</Lasers>
