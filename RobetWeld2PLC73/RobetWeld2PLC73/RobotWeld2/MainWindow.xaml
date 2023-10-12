@@ -1,0 +1,449 @@
+﻿<!--
+    Sunflower Laser Welding System, Ver. 3.0
+    Designed by: Jiangsu Jacalt laser Tech Corp. 
+    Designed by: Jiangsu Jacalt laser Tech Corp.
+    Copyright (c) 2022, Jiangsu Jacalt laser Tech Corp.
+    WebSite: https://www.jacalt-laser.com
+    The Software used the GPL licenses. 
+-->
+
+<Window x:Class="RobotWeld2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:RobotWeld2.ViewModel"
+        xmlns:local="clr-namespace:RobotWeld2"
+        Title="FlowerWeld" WindowState="Maximized" MinHeight="400" MinWidth="800"
+        ResizeMode="CanResize" Background="Transparent"
+        Icon="/Images/sunflower.ico" Closing="WindowClose_Click" >
+
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome CornerRadius="0" CaptionHeight="30" UseAeroCaptionButtons="True" NonClientFrameEdges="None" GlassFrameThickness="-1"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
+
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid x:Name="Control_panel" Grid.Row="0" Background="{TemplateBinding Background}">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Image Source="/Images/sunflower.png" Width="32"/>
+                        <Label Content="FlowerWeld" VerticalAlignment="Center" FontFamily="Comic sans MS" FontSize="16"/>
+                    </StackPanel>
+                </Grid>
+                <AdornerDecorator Grid.Row="1">
+                    <ContentPresenter ClipToBounds="True"/>
+                </AdornerDecorator>
+            </Grid>
+        </ControlTemplate>
+    </Window.Template>
+
+    <!-- Data binding -->
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+
+    <!-- Command binding -->
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="ApplicationCommands.Close" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="ApplicationCommands.SaveAs" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="ApplicationCommands.New" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.RunCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.VaneWheelCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.IntersectCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.TopTraceCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.StageTraceCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.SpiralCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.InputTraceCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.AutoTraceCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.PresetParameterCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.UserParameterCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.AutoParameterCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.LaserDecodeCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.LaserVersionCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.SetupCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.GetHelpCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.ShowAboutCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.RunVaneWheelCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+        <CommandBinding Command="vm:MainWindowViewModel.LaserTypeCommand" CanExecute="CommandCanExecute" Executed="CommandExecuted" />
+    </Window.CommandBindings>
+
+    <Grid Margin="10,0,10,0">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/background.png" Stretch="Fill"/>
+        </Grid.Background>
+
+        <!-- grid definition of main window -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="42"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- menu -->
+        <DockPanel Grid.Row="0" Grid.Column="0" Margin="5,0,0,5" Opacity="0.9"
+                   VerticalAlignment="Center">
+            <Menu DockPanel.Dock="Top" FontSize="16" Height="25"
+                  HorizontalAlignment="Left" VerticalAlignment="Center"
+                  Background="#EEEEF2">
+                <MenuItem Header="文件" Width="50">
+                    <MenuItem Header="新建(_N)" Width="200" Command="New"/>
+                    <MenuItem Header="打开(_O)" Width="200" Command="Open">
+                        <MenuItem.Icon>
+                            <Image Source="Images/open.png" Width="20" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="导入" Width="200" 
+                              Command="vm:MainWindowViewModel.ImportCommand" >
+                        <MenuItem.Icon>
+                            <Image Source="/Images/DXF.png" Width="20" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="运行(_M)" Width="200" 
+                              Command="vm:MainWindowViewModel.RunCommand">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/downarrow.png" Width="20" />
+                        </MenuItem.Icon>
+                        <MenuItem Header="叶轮" Width="150"
+                                  Command="vm:MainWindowViewModel.RunVaneWheelCommand">
+
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="保存(_S)" Width="200" Command="SaveAs">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/floppydisk.png" Width="20"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="退出(_X)" Width="200" Command="Close" />
+                </MenuItem>
+
+                <!-- Trace menu -->
+                <MenuItem Header="轨迹" Width="50">
+                    <MenuItem Header="人工输入" Width="150"
+                              Command="vm:MainWindowViewModel.InputTraceCommand">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/tpmed.png" Width="20" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="预设" Width="150">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/curve.png" Width="20"/>
+                        </MenuItem.Icon>
+
+                        <MenuItem Header="叶轮" Width="150"
+                                  Command="vm:MainWindowViewModel.VaneWheelCommand">
+                            <MenuItem.Icon>
+                                <Image Source="/Images/vane.png" Width="20" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="相贯线" Width="150"
+                                  Command="vm:MainWindowViewModel.IntersectCommand">
+                            <MenuItem.Icon>
+                                <Image Source="/Images/intersection.png" Width="20" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="顶盖" Width="150"
+                                  Command="vm:MainWindowViewModel.TopTraceCommand">
+                            <MenuItem.Icon>
+                                <Image Source="/Images/topcover.png" Width="20" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="台阶" Width="150"
+                                  Command="vm:MainWindowViewModel.StageTraceCommand">
+                            <MenuItem.Icon>
+                                <Image Source="/Images/stage.png" Width="20" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="螺旋线" Width="150"
+                                  Command="vm:MainWindowViewModel.SpiralCommand">
+                            <MenuItem.Icon>
+                                <Image Source="/Images/spiral.png" Width="20" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="自动获取" Width="150" 
+                              Command="vm:MainWindowViewModel.AutoTraceCommand"/>
+                </MenuItem>
+
+                <!-- welding parameters -->
+                <MenuItem Header="焊接参数" Width="80">
+                    <MenuItem Header="常规" Width="150" 
+                              Command="vm:MainWindowViewModel.PresetParameterCommand">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/param.png" Width="20"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="自定义" Width="150" 
+                              Command="vm:MainWindowViewModel.UserParameterCommand">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/hand.png" Width="20"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="自动" Width="150" 
+                              Command="vm:MainWindowViewModel.AutoParameterCommand"/>
+                </MenuItem>
+
+                <!-- Laser setup -->
+                <MenuItem Header="激光设置" Width="80">
+                    <MenuItem Header="激光型号" Width="150"
+                              Command="vm:MainWindowViewModel.LaserTypeCommand"/>
+                    <MenuItem Header="解码" Width="150" 
+                              Command="vm:MainWindowViewModel.LaserDecodeCommand">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/decode.png" Width="20"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="出厂信息" Width="150" 
+                              Command="vm:MainWindowViewModel.LaserVersionCommand"/>
+                </MenuItem>
+
+                <!-- Help menu -->
+                <MenuItem Header="帮助" Width="50">
+                    <MenuItem Header="设置" Width="150" 
+                              Command="vm:MainWindowViewModel.SetupCommand"/>
+                    <MenuItem Header="操作手册" Width="150" 
+                              Command="vm:MainWindowViewModel.GetHelpCommand">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/question.png" Width="20" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="关于" Width="150" 
+                              Command="vm:MainWindowViewModel.ShowAboutCommand"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <!-- Tracing interaction region -->
+        <Grid Name="WeldingParameter" Background="White" Opacity="0.8"
+              Grid.Row="1" Grid.Column="0" Margin="5,0,5,15">
+
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Height" Value="25"/>
+                    <Setter Property="Width" Value="75" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border BorderBrush="DarkGray" CornerRadius="3,3,3,3" BorderThickness="1" >
+                                    <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                                  HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  Background="#304371" Opacity="0.9">
+                                        <Label Name="buttonface" Padding="0,0,0,0"
+                                       Content="{TemplateBinding Content}" FontFamily="Microsoft YaHei UI" FontSize="16" 
+                                       Foreground="White" Background="#304371" 
+                                       Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="buttonface" Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                    <Trigger Property="Button.IsPressed" Value="True">
+                                        <Setter TargetName="buttonface" Property="Background" Value="DarkRed"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition />
+                <RowDefinition Height="32" />
+            </Grid.RowDefinitions>
+
+            <!-- pointer's property -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" 
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Name="WholeResetButton" Content="3轴复位" Margin="0,0,10,0" Click="WholeResetButton_Click_1"/>
+                <Button Name="ClickLightButton" Content="点动出光" 
+                        Click="ClickLightButton_Click" ClickMode="Release"
+                        MouseLeftButtonDown="ClickLightButton_MouseLeftButtonDown" MouseLeftButtonUp="ClickLightButton_MouseLeftButtonUp"/>
+            </StackPanel>
+
+            <!-- Trace 3D Plot -->
+            <Grid Grid.Row="1" HorizontalAlignment="Center">
+                <ContentControl x:Name="TracePages" Margin="10,10,10,10"  Content="{Binding SelectedTracePlot}"/>
+            </Grid>
+
+            <!-- processing conditions -->
+            <StackPanel Grid.Row="2" Margin="0,0,0,0" Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <local:ToggleButtonPoint Margin="0,0,10,0"/>
+
+                <Label Content="每面共" FontFamily="Microsoft YaHei UI" FontSize="16"/>
+                <TextBox Name="TraceCount" Width="45" HorizontalAlignment="Center" FontFamily="Microsoft YaHei UI" Foreground="DarkRed" Background="White" FontSize="16" Height="25" Padding="3,0,0,0"
+                         Text="{Binding Path=TraceCount, UpdateSourceTrigger=PropertyChanged}"
+                         InputMethod.IsInputMethodEnabled="False" GotFocus="TraceCount_GotFocus"
+                         PreviewMouseLeftButtonDown="TraceCount_PreviewMouseLeftButtonDown" 
+                         KeyDown="TraceCount_KeyDown">
+                </TextBox>
+                <Label Content="条" FontFamily="Microsoft YaHei UI" FontSize="16"/>
+                
+                <Label Content="第" FontFamily="Microsoft YaHei UI" FontSize="16"/>
+                <TextBox Name="TraceInfo" Width="45" HorizontalAlignment="Center" FontFamily="Microsoft YaHei UI"
+                         Foreground="DarkRed" Background="White" FontSize="16" Height="25" Padding="3,0,0,0"
+                         Text="{Binding Path=TraceInfo, UpdateSourceTrigger=PropertyChanged}"
+                         InputMethod.IsInputMethodEnabled="False" GotFocus="TraceInfo_GotFocus"
+                         PreviewMouseLeftButtonDown="TraceInfo_PreviewMouseLeftButtonDown" 
+                         KeyDown="TraceInfo_KeyDown">
+                </TextBox>
+                <Label Content="条" FontFamily="Microsoft YaHei UI" FontSize="16"/>
+
+                <Label Content="第" FontFamily="Microsoft YaHei UI" FontSize="16"/>
+                <TextBox Name="PointInfo" Width="45" HorizontalAlignment="Center" FontFamily="Microsoft YaHei UI"
+                         Foreground="DarkRed" Background="White" FontSize="16" Height="25" Padding="3,0,0,0"
+                         Text="{Binding Path=PtIndex, UpdateSourceTrigger=PropertyChanged}"
+                         InputMethod.IsInputMethodEnabled="False" GotFocus="PointInfo_GotFocus"
+                         PreviewMouseLeftButtonDown="PointInfo_PreviewMouseLeftButtonDown" 
+                         KeyDown="PointInfo_KeyDown">
+                </TextBox>
+                <Label Content="点" FontFamily="Microsoft YaHei UI" FontSize="16"/>
+            </StackPanel>
+
+
+            <!-- End of Curve area -->
+        </Grid>
+
+        <!-- PLC program area -->
+        <!-- Information of video -->
+        <Grid Name="Position" Grid.Row="0" Grid.Column="1" Margin="5,0,0,5"
+              VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="380"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!-- info of coordinate -->
+            <StackPanel Grid.Column="0" 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left" VerticalAlignment="Center" 
+                        Margin="0,2,0,0" Height="25">
+                <Label Content="位置" Background="#EEEEF2" Opacity="0.9"
+                       HorizontalAlignment="Left" 
+                       FontSize="16" 
+                       Width="40" Padding="2,2,0,0"/>
+                <Label Content="X" Background="#EEEEF2" Opacity="0.9"
+                       HorizontalAlignment="Center"      
+                       FontSize="16" Margin="5,0,0,0"
+                       Width="20" Padding="2,2,0,0"/>
+                <TextBlock Text="{Binding Path=X, Mode=OneWay}" 
+                           HorizontalAlignment="Center" 
+                           FontSize="16" Background="#EEEEF2" Opacity="0.9"
+                           Width="65" Padding="2,2,0,0"/>
+                <Label Content="Y" Margin="5,0,0,0"
+                       HorizontalAlignment="Center" 
+                       FontSize="16" Background="#EEEEF2" Opacity="0.9"
+                       Width="20" Padding="2,2,0,0"/>
+                <TextBlock Text="{Binding Path=Y, Mode=OneWay}" 
+                           HorizontalAlignment="Center" 
+                           FontSize="16" Background="#EEEEF2" Opacity="0.9"
+                           Width="65" Padding="2,2,0,0"/>
+                <Label Content="Z" Margin="5,0,0,0"
+                       HorizontalAlignment="Center" 
+                       FontSize="16" Background="#EEEEF2" Opacity="0.9"
+                       Width="20" Padding="2,2,0,0"/>
+                <TextBlock Text="{Binding Path=Z, Mode=OneWay}" HorizontalAlignment="Center" Width="65"
+                           FontSize="16" Padding="2,2,0,0"
+                           Background="#EEEEF2" Opacity="0.9"/>
+            </StackPanel>
+
+            <!-- Alarm light, Todo: change the color -->
+            <Canvas Grid.Column="1" Margin="0,0,0,0" Height="22">
+                <Label Canvas.Right="20" Canvas.Top="0" Height="22" Padding="0">
+                    <Image Stretch="UniformToFill" Height="22" Width="22" Source="/Images/greenx.png" />
+                </Label>
+            </Canvas>
+        </Grid>
+
+        <!-- work information, video and control for PLC -->
+        <Grid Grid.Row="1" Grid.Column="1" Margin="5,0,5,15">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid.Resources>
+                <!-- Tab Control Template -->
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                <Grid>
+                                    <Border Name="Border" Background="SteelBlue" BorderBrush="Black" BorderThickness="1,1,1,1" CornerRadius="6,6,0,0">
+                                        <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="12,2,12,2"/>
+                                    </Border>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="White" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="#EEEEF2" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+
+            <TabControl Name="TabControl" Grid.Row="0" Background="white" Opacity="0.8" Grid.ColumnSpan="2" 
+                        SelectionChanged="TabControl_SelectionChanged">
+
+                <!-- Air valve -->
+                <TabItem Name="AirValve" FontFamily="YaHei" FontSize="16">
+                    <TabItem.Header>
+                        <Label Content="气缸"/>
+                    </TabItem.Header>
+                    <local:AirValve x:Name="AirValvePage"/>
+                </TabItem>
+
+                <!-- IO information -->
+                <TabItem Name="IOinfo" FontFamily="Microsoft YaHei UI" FontSize="16" 
+                         Background="#EEEEF2">
+                    <TabItem.Header>
+                        <Label Content="IO信息"/>
+                    </TabItem.Header>
+                    <local:PlcIo />
+                </TabItem>
+
+                <!-- manual operation -->
+                <TabItem Name="ManualOperation" 
+                         FontFamily="Microsoft YaHei UI" FontSize="16" 
+                         Background="#EEEEF2">
+                    <TabItem.Header>
+                        <Label Content="手动操作"/>
+                    </TabItem.Header>
+                    <local:ManualOperation/>
+                </TabItem>
+
+                <TabItem Name="TakePointList" FontFamily="Microsoft YaHei UI" FontSize="16" Background="#EEEEF2">
+                    <TabItem.Header>
+                        <Label Content="选点列表"/>
+                    </TabItem.Header>
+
+                    <local:PointList/>
+                    
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>

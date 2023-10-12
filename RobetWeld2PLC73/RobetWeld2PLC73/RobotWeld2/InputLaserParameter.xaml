@@ -1,0 +1,231 @@
+﻿<!--
+    Sunflower Laser Welding System, Ver. 3.0
+    Designed by: Jiangsu Jacalt laser Tech Corp. 
+    Designed by: Jiangsu Jacalt laser Tech Corp.
+    Copyright (c) 2022, Jiangsu Jacalt laser Tech Corp.
+    WebSite: https://www.jacalt-laser.com
+    The Software used the GPL licenses. 
+-->
+
+<Window x:Class="RobotWeld2.InputLaserParameter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:RobotWeld2.ViewModel"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" Background="Transparent"
+        Title="自定义激光参数" Height="430" Width="800" ResizeMode="NoResize"
+        Icon="/Images/sunflower.ico">
+
+    <Window.DataContext>
+        <vm:InputViewModel />
+    </Window.DataContext>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1"/>
+    </WindowChrome.WindowChrome>
+
+    <!-- Grid configuration -->
+    <Grid Background="GhostWhite" Opacity="0.9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="42" />
+            <RowDefinition Height="42" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="42" />
+            <RowDefinition Height="42" />
+        </Grid.RowDefinitions>
+
+        <!-- illustration of frequency -->
+        <Grid Grid.Row="1" HorizontalAlignment="Center">
+            <Canvas Margin="0" Width="800">
+                <Line Stroke="RoyalBlue" StrokeThickness="3" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" />
+                <Line Stroke="RoyalBlue" StrokeThickness="3" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="100"/>
+                <Line Stroke="RoyalBlue" StrokeThickness="3" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="200"/>
+                <Line Stroke="RoyalBlue" StrokeThickness="3" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="300"/>
+                <Line Stroke="RoyalBlue" StrokeThickness="3" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="50" Canvas.Bottom="60" />
+                <Line Stroke="RoyalBlue" StrokeThickness="3" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="150" Canvas.Bottom="60" />
+                <Line Stroke="RoyalBlue" StrokeThickness="3" 
+                  X1="200" Y1="60"
+                  X2="250" Y2="60" Canvas.Left="250" Canvas.Bottom="60" />
+                <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" />
+                <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" Canvas.Left="50"/>
+                <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" Canvas.Left="100"/>
+                <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" Canvas.Left="150"/>
+                <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" Canvas.Left="200"/>
+                <Line Stroke="RoyalBlue" StrokeThickness="2" 
+                  X1="250" Y1="61"
+                  X2="250" Y2="18" Canvas.Left="250"/>
+            </Canvas>
+        </Grid>
+
+        <!-- frequency parameters -->
+        <Grid Grid.Row="2" Background="#7D5F9EA0"></Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="频率" FontFamily="Microsoft YaHei UI" FontSize="16"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBox Name="Frequency" Padding="0,3,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                         FontFamily="Microsoft YaHei UI" FontSize="16"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                         InputMethod.IsInputMethodEnabled="False"
+                     GotFocus="Frequency_GotFocus" 
+                     PreviewMouseLeftButtonDown="Frequency_PreviewMouseLeftButtonDown" 
+                     KeyDown="Frequency_KeyDown"
+                     Text="{Binding Path=Frequency, Mode=TwoWay}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="脉宽" FontFamily="Microsoft YaHei UI" FontSize="16"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBox Name="PulseWidth" Padding="0,3,0,0" Width="75" Height="28" TextWrapping="NoWrap"
+                         FontFamily="Microsoft YaHei UI" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"
+                         InputMethod.IsInputMethodEnabled="False" GotFocus="PulseWidth_GotFocus" PreviewMouseLeftButtonDown="PulseWidth_PreviewMouseLeftButtonDown"
+                     KeyDown="PulseWidth_KeyDown" Text="{Binding Path=LaserPulseWidth, Mode=TwoWay}" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="占空比" FontFamily="Microsoft YaHei UI" FontSize="16"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBox Name="DutyCycle" Canvas.Left="475" Canvas.Top="7"
+                     Padding="0,3,0,0" Width="75" Height="28" TextWrapping="NoWrap"
+                         FontFamily="Microsoft YaHei UI" FontSize="16"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                         InputMethod.IsInputMethodEnabled="False"
+                     GotFocus="DutyCycle_GotFocus" 
+                     PreviewMouseLeftButtonDown="DutyCycle_PreviewMouseLeftButtonDown" 
+                     KeyDown="DutyCycle_KeyDown"
+                     Text="{Binding Path=LaserDutyCycle, Mode=TwoWay}"/>
+            </StackPanel>
+
+            <!-- End of frequency parameters -->
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Content="激光功率" FontFamily="Microsoft YaHei UI" FontSize="16"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="LaserPower" Padding="0,3,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     FontFamily="Microsoft YaHei UI" FontSize="16"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"   
+                     InputMethod.IsInputMethodEnabled="False"
+                     GotFocus="LaserPower_GotFocus" 
+                     PreviewMouseLeftButtonDown="LaserPower_PreviewMouseLeftButtonDown"  
+                     KeyDown="LaserPower_KeyDown"
+                     Text="{Binding Path=LaserPower, Mode=TwoWay}"/>
+        </StackPanel>
+
+        <!-- Graphic of laser parameters -->
+        <Grid Grid.Row="4" HorizontalAlignment="Center">
+            <Canvas Margin="0" Width="800">
+                <!-- the power curve -->
+                <Line Stroke="MidnightBlue" StrokeThickness="2" StrokeDashArray="2,1"
+                  X1="95" Y1="125"
+                  X2="210" Y2="125" />
+                <Line Stroke="MidnightBlue" StrokeThickness="3"
+                  X1="210" Y1="125"
+                  X2="285" Y2="25" />
+                <Line Stroke="MidnightBlue" StrokeThickness="3"
+                  X1="285" Y1="25"
+                  X2="510" Y2="25" />
+                <Line Stroke="MidnightBlue" StrokeThickness="3"
+                  X1="510" Y1="25"
+                  X2="585" Y2="125" />
+                <Line Stroke="MidnightBlue" StrokeThickness="2" StrokeDashArray="2,1"
+                  X1="95" Y1="125"
+                  X2="210" Y2="125" Canvas.Left="490" />
+                <Line Stroke="DimGray" StrokeThickness="1" StrokeDashArray="5,2"
+                  X1="285" Y1="145"
+                  X2="285" Y2="25" />
+                <Line Stroke="DimGray" StrokeThickness="1" StrokeDashArray="5,2"
+                  X1="480" Y1="145"
+                  X2="480" Y2="25" />
+                <Line Stroke="DimGray" StrokeThickness="1" StrokeDashArray="5,2"
+                  X1="510" Y1="145"
+                  X2="510" Y2="25" />
+            </Canvas>
+        </Grid>
+
+        <!-- illustration of weldding parameters -->
+        <StackPanel Grid.Row="5" Orientation="Horizontal" Background="#7D5F9EA0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Content="焊接速度" FontFamily="Microsoft YaHei UI" FontSize="16"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="WeldSpeed" FontFamily="Microsoft YaHei UI" FontSize="16"
+                     Padding="0,3,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center" 
+                     InputMethod.IsInputMethodEnabled="False"
+                     GotFocus="WeldSpeed_GotFocus" 
+                     PreviewMouseLeftButtonDown="WeldSpeed_PreviewMouseLeftButtonDown" 
+                     KeyDown="WeldSpeed_KeyDown"
+                     Text="{Binding Path=WeldSpeed, Mode=TwoWay}"/>
+
+            <Label Content="摆动频率" FontFamily="Microsoft YaHei UI" FontSize="16"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="WobbleSpeed" FontFamily="Microsoft YaHei UI" FontSize="16"
+                     Padding="0,3,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     InputMethod.IsInputMethodEnabled="False"
+                     GotFocus="WobbleSpeed_GotFocus" 
+                     PreviewMouseLeftButtonDown="WobbleSpeed_PreviewMouseLeftButtonDown" 
+                     KeyDown="WobbleSpeed_KeyDown"
+                     Text="{Binding Path=WobbleSpeed, Mode=TwoWay}"/>
+
+            <Label Content="空走速度" FontFamily="Microsoft YaHei UI" FontSize="16"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="LeapSpeed" FontFamily="Microsoft YaHei UI" FontSize="16"
+                     Padding="0,3,0,0"
+                     Width="75" Height="28" TextWrapping="NoWrap"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     InputMethod.IsInputMethodEnabled="False"
+                     GotFocus="LeapSpeed_GotFocus" 
+                     PreviewMouseLeftButtonDown="LeapSpeed_PreviewMouseLeftButtonDown" 
+                     KeyDown="LeapSpeed_KeyDown"
+                     Text="{Binding Path=LeapSpeed, Mode=TwoWay}"/>
+        </StackPanel>
+
+        <!-- button -->
+        <Canvas Grid.Row="6" Background="#D3D3D3">
+            <StackPanel Canvas.Right="15" Canvas.Bottom="10" 
+                        Orientation="Horizontal">
+                <Button Content="取消(_C)" Width="75" Margin="0,0,5,0"
+                        FontFamily="MicroSoft YaHei UI" FontSize="16" Background="White"
+                        Click="CancelButton_Click" />
+                <Button Content="确定(_O）" Canvas.Right="12" Canvas.Bottom="10" Width="75"
+                        FontFamily="MicroSoft YaHei UI" FontSize="16" Background="White"
+                    Click="OkButton_Click" />
+            </StackPanel>
+        </Canvas>
+    </Grid>
+</Window>
