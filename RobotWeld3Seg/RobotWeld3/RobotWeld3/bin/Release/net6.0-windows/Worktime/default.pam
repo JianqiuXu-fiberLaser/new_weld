@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--The parameter file for the sun flower welding system-->
+<Parameter>
+    <parameter>
+        <air>5.0</air>
+        <rise>1.0</rise>
+        <fall>1.0</fall>
+        <wireback>1.0</wireback>
+        <refeed>1.0</refeed>
+        <wirespeed>1.0</wirespeed>
+        <withdrawspeed>1.0</withdrawspeed>
+    </parameter>
+</Parameter>

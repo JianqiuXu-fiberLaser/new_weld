@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--The record file for the sun flower welding system-->
+<Trace>
+  <trace>
+    <type>spiral</type>
+    <time>95142320</time>
+    <parameter>10</parameter>
+    <material>
+      <mtype>1</mtype>
+      <thickness>0</thickness>
+    </material>
+    <wire>1.2</wire>
+    <subtrace>
+      <order>0</order>
+      <point>
+        <number>0</number>
+        <coordinate>0,0,0,0</coordinate>
+        <ltype>0</ltype>
+        <laser>
+          <power>0</power>
+          <frequency>0</frequency>
+          <duty>0</duty>
+        </laser>
+        <wobble>0</wobble>
+        <speed>125</speed>
+      </point>
+      <point>
+        <number>1</number>
+        <coordinate>63121,51275,21905,0</coordinate>
+        <ltype>1</ltype>
+        <laser>
+          <power>600</power>
+          <frequency>0</frequency>
+          <duty>0</duty>
+        </laser>
+        <wobble>0</wobble>
+        <speed>25</speed>
+      </point>
+      <point>
+        <number>2</number>
+        <coordinate>73457,51275,21905,4001</coordinate>
+        <ltype>1</ltype>
+        <laser>
+          <power>600</power>
+          <frequency>0</frequency>
+          <duty>0</duty>
+        </laser>
+        <wobble>0</wobble>
+        <speed>25</speed>
+      </point>
+    </subtrace>
+  </trace>
+</Trace>

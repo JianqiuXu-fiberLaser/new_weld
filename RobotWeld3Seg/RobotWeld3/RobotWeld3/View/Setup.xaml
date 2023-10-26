@@ -1,0 +1,95 @@
+﻿<!--
+    Sunflower Laser Welding System, Ver. 3.0
+    Designed by: Jiangsu Jacalt laser Tech Corp. 
+    Copyright (c) 2022, Jiangsu Jacalt laser Tech Corp.
+    WebSite: https://www.jacalt-laser.com
+    The Software used the GPL licenses. 
+    
+    Ver.3.0: 1) New hardware Library with more smooth moving.
+             2) Automatical rise and fall edge for lasing.
+             3) Computer vision and welding seam recongnition.
+-->
+
+<Window x:Class="RobotWeld3.View.Setup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:RobotWeld3.ViewModel"
+        xmlns:view="clr-namespace:RobotWeld3.View"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" Background="Transparent" 
+        ResizeMode="NoResize"
+        Title="Setup" Height="280" Width="380"
+        Icon="../Images/sunflower.ico">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.DataContext>
+        <vm:SetupViewModel />
+    </Window.DataContext>
+
+    <Grid Background="GhostWhite" Opacity="0.9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="设置管理员密码" Foreground="MidnightBlue"
+               FontFamily="Microsoft YaHei UI" FontSize="18" 
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Canvas Grid.Row="1" Height="60" Width="380">
+            <Image Source="../Images/password.png" Stretch="Fill" Height="60" Width="380"
+                   FlowDirection="RightToLeft"/>
+        </Canvas>
+
+        <StackPanel Grid.Row="1" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Label Content="输入密码" Margin="0,0,5,0" Foreground="Bisque"
+                   FontFamily="Microsoft YaHei UI" FontSize="18"
+                   VerticalAlignment="Center"/>
+            <TextBox Name="InWord1" Width="140" Height="40" Background="GhostWhite"
+                     FontFamily="Microsoft YaHei UI" FontSize="18" TextWrapping="NoWrap" 
+                     Padding="0,6,0,0" VerticalAlignment="Center"
+                     InputMethod.IsInputMethodEnabled="False"
+                     GotFocus="InWord1_GotFocus"
+                     PreviewMouseLeftButtonDown="InWord1_PreviewMouseLeftButtonDown"
+                     KeyDown="InWord1_KeyDown"
+                     Text="{Binding Path=InputPassword1, Mode=TwoWay}"/>
+        </StackPanel>
+
+        <Canvas Grid.Row="2" Height="60" Width="380">
+            <Image Source="../Images/password.png" Stretch="Fill" Height="60" Width="380" />
+        </Canvas>
+
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Label Content="确认密码" Margin="0,0,5,0" Foreground="OrangeRed"
+                   FontFamily="Microsoft YaHei UI" FontSize="18"
+                   VerticalAlignment="Center"/>
+            <TextBox Name="InWord2" Width="140" Height="40" Background="GhostWhite"
+                     FontFamily="Microsoft YaHei UI" FontSize="18" TextWrapping="NoWrap" 
+                     Padding="0,6,0,0" VerticalAlignment="Center"
+                     InputMethod.IsInputMethodEnabled="False"
+                     GotFocus="InWord2_GotFocus"
+                     PreviewMouseLeftButtonDown="InWord2_PreviewMouseLeftButtonDown"
+                     KeyDown="InWord2_KeyDown"
+                     Text="{Binding Path=InputPassword2, Mode=TwoWay}"/>
+        </StackPanel>
+
+        <Canvas Grid.Row="3">
+            <StackPanel Orientation="Horizontal" Canvas.Right="25" Canvas.Bottom="25">
+                <Button Content="放弃(_C)" Width="75" Margin="0,0,5,0"
+                    Click="CancelButton_Click" FontSize="16"/>
+                <Button Content="确定(_O)" Width="75" Margin="0,0,5,0"
+                    Click="OkButton_Click" FontSize="16"/>
+            </StackPanel>
+        </Canvas>
+    </Grid>
+</Window>

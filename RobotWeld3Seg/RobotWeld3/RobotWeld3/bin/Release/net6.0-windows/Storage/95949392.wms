@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--The weldsection file for the sun flower welding system-->
+<wmsbase>
+  <wmslist>
+    <time>95142320</time>
+    <wms>
+      <order>0</order>
+      <vector>
+        <point id="0">0,0,0,0</point>
+        <point id="1">63121,51275,21905,0</point>
+      </vector>
+      <velocity>
+        <speed id="0">125</speed>
+        <speed id="1">25</speed>
+      </velocity>
+      <laser>
+        <power>0</power>
+        <frequency>0</frequency>
+        <duty>0</duty>
+        <rise>0</rise>
+        <fall>0</fall>
+        <air>100</air>
+        <hold>0</hold>
+        <wiretime>0</wiretime>
+        <wirespeed>0</wirespeed>
+        <wirelength>0</wirelength>
+        <wireback>0</wireback>
+      </laser>
+      <material>
+        <mindex>1</mindex>
+        <thick>0</thick>
+      </material>
+      <wire>
+        <windex>0</windex>
+        <diameter>1.2</diameter>
+      </wire>
+      <wobble>0</wobble>
+    </wms>
+    <wms>
+      <order>1</order>
+      <vector>
+        <point id="0">63121,51275,21905,0</point>
+        <point id="1">63121,51275,21815.11295498369,509.2958178940651</point>
+        <point id="2">63121,51275,21557.605743128428,1018.5916357881302</point>
+        <point id="3">63121,51275,21168.063930765802,1527.8874536821957</point>
+        <point id="4">63121,51275,20702.596589147885,2037.1832715762605</point>
+        <point id="5">63121,51275,20232.14092470072,2546.4790894703256</point>
+        <point id="6">63121,51275,19833.128718546,3055.7749073643904</point>
+        <point id="7">63121,51275,19574.491172030026,3565.0707252584557</point>
+        <point id="8">63121,51275,19500.917942265423,4000</point>
+        <point id="9">63121,51275,19500.917942265423,4000</point>
+        <point id="10">63121,51275,19574.491172030026,4509.295817894065</point>
+        <point id="11">63121,51275,19833.128718546,5018.591635788131</point>
+        <point id="12">63121,51275,20232.14092470072,5527.887453682196</point>
+        <point id="13">63121,51275,20702.596589147885,6037.18327157626</point>
+        <point id="14">63121,51275,21168.063930765802,6546.479089470326</point>
+        <point id="15">63121,51275,21557.605743128428,7055.77490736439</point>
+        <point id="16">63121,51275,21815.11295498369,7565.070725258456</point>
+        <point id="17">63121,51275,21905,8000</point>
+        <point id="18">63121,51275,21815.11295498369,8509.295817894064</point>
+        <point id="19">63121,51275,21557.605743128428,9018.59163578813</point>
+        <point id="20">63121,51275,21168.063930765802,9527.887453682195</point>
+        <point id="21">63121,51275,20702.596589147885,10037.183271576261</point>
+        <point id="22">63121,51275,20232.14092470072,10546.479089470326</point>
+        <point id="23">63121,51275,19833.128718546,11055.77490736439</point>
+        <point id="24">63121,51275,19574.491172030026,11565.070725258456</point>
+        <point id="25">63121,51275,19500.917942265423,12000</point>
+        <point id="26">63121,51275,19574.491172030026,12509.295817894064</point>
+        <point id="27">63121,51275,19833.128718546,13018.59163578813</point>
+        <point id="28">63121,51275,20232.14092470072,13527.887453682195</point>
+        <point id="29">63121,51275,20702.596589147885,14037.183271576261</point>
+        <point id="30">63121,51275,21168.063930765802,14546.479089470326</point>
+        <point id="31">63121,51275,21557.605743128428,15055.77490736439</point>
+        <point id="32">63121,51275,21815.11295498369,15565.070725258456</point>
+        <point id="33">63121,51275,21905,16000</point>
+      </vector>
+      <velocity>
+        <speed id="0">6.25</speed>
+        <speed id="1">4.41980765434729</speed>
+        <speed id="2">4.419807911399924</speed>
+        <speed id="3">4.419808167159932</speed>
+        <speed id="4">4.419808350996835</speed>
+        <speed id="5">4.4198084132088935</speed>
+        <speed id="6">4.419808341658834</speed>
+        <speed id="7">4.419808195570673</speed>
+        <speed id="8">4.419808195570673</speed>
+        <speed id="9">4.419807987575878</speed>
+        <speed id="10">4.419807773944383</speed>
+        <speed id="11">4.4198075996796575</speed>
+        <speed id="12">4.419807484957543</speed>
+        <speed id="13">4.419807425300654</speed>
+        <speed id="14">4.419807402653918</speed>
+        <speed id="15">4.419807397608816</speed>
+        <speed id="16">4.419807397296825</speed>
+        <speed id="17">4.419807397543417</speed>
+        <speed id="18">4.419807400575823</speed>
+        <speed id="19">4.419807410517077</speed>
+        <speed id="20">4.419807429010754</speed>
+        <speed id="21">4.419807452897117</speed>
+        <speed id="22">4.419807474907331</speed>
+        <speed id="23">4.4198074870352135</speed>
+        <speed id="24">4.419807485993927</speed>
+        <speed id="25">4.419807473999255</speed>
+        <speed id="26">4.419807453268833</speed>
+        <speed id="27">4.419807431090241</speed>
+        <speed id="28">4.419807413511708</speed>
+        <speed id="29">4.419807402968576</speed>
+        <speed id="30">4.419807398473381</speed>
+        <speed id="31">4.419807397370525</speed>
+        <speed id="32">4.419807397296825</speed>
+        <speed id="33">6.25</speed>
+      </velocity>
+      <laser>
+        <power>600</power>
+        <frequency>0</frequency>
+        <duty>0</duty>
+        <rise>0</rise>
+        <fall>0</fall>
+        <air>100</air>
+        <hold>0</hold>
+        <wiretime>0</wiretime>
+        <wirespeed>0</wirespeed>
+        <wirelength>0</wirelength>
+        <wireback>0</wireback>
+      </laser>
+      <material>
+        <mindex>1</mindex>
+        <thick>0</thick>
+      </material>
+      <wire>
+        <windex>0</windex>
+        <diameter>1.2</diameter>
+      </wire>
+      <wobble>0</wobble>
+    </wms>
+    <wms>
+      <order>2</order>
+      <vector>
+        <point id="0">63121,51275,21905,0</point>
+        <point id="1">0,0,0,0</point>
+      </vector>
+      <velocity>
+        <speed id="0">125</speed>
+        <speed id="1">125</speed>
+      </velocity>
+      <laser>
+        <power>0</power>
+        <frequency>0</frequency>
+        <duty>0</duty>
+        <rise>0</rise>
+        <fall>0</fall>
+        <air>100</air>
+        <hold>0</hold>
+        <wiretime>0</wiretime>
+        <wirespeed>0</wirespeed>
+        <wirelength>0</wirelength>
+        <wireback>0</wireback>
+      </laser>
+      <material>
+        <mindex>1</mindex>
+        <thick>0</thick>
+      </material>
+      <wire>
+        <windex>0</windex>
+        <diameter>1.2</diameter>
+      </wire>
+      <wobble>0</wobble>
+    </wms>
+  </wmslist>
+</wmsbase>

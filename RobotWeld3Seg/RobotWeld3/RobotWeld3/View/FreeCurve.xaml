@@ -1,0 +1,49 @@
+﻿<!--
+    Sunflower Laser Welding System, Ver. 3.0
+    Designed by: Jiangsu Jacalt laser Tech Corp. 
+    Copyright (c) 2022, Jiangsu Jacalt laser Tech Corp.
+    WebSite: https://www.jacalt-laser.com
+    The Software used the GPL licenses. 
+    
+    Ver.3.0: 1) New hardware Library with more smooth moving.
+             2) Automatical rise and fall edge for lasing.
+             3) Computer vision and welding seam recongnition.
+-->
+
+<UserControl x:Class="RobotWeld3.View.FreeCurve"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:RobotWeld3.ViewModel"
+             xmlns:local="clr-namespace:RobotWeld3"
+             xmlns:view="clr-namespace:RobotWeld3.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Grid.Row="0" Grid.Column="0" Name="FreeCurveGrid" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+
+        <Canvas Name="FreeCurveCanvas" Margin="5,5,5,5" MinWidth="{Binding ElementName=FreeCurveGrid, Path=ActualWidth}">
+            <Path x:Name="FreeTrace" Stroke="Black" StrokeThickness="1" StrokeDashArray="2 2">
+                <Path.Data>
+                    <PathGeometry x:Name="FreeTraceData"/>
+                </Path.Data>
+            </Path>
+
+            <Path x:Name="FreeTraceLaser" Stroke="DarkRed" StrokeThickness="1">
+                <Path.Data>
+                    <PathGeometry x:Name="FreeTraceLaserData"/>
+                </Path.Data>
+            </Path>
+
+            <!-- Ordinate Axis -->
+            <Line X1="0" Y1="0" X2="0" Y2="-50" Canvas.Top="0" Canvas.Left="0"  Stroke="DarkGreen" StrokeThickness="1" StrokeLineJoin="Miter" StrokeEndLineCap="Triangle"/>
+            <Line X1="0" Y1="-50" X2="1.5" Y2="-45" Canvas.Top="0" Canvas.Left="0"  Stroke="DarkGreen" StrokeThickness="1" StrokeStartLineCap="Triangle"/>
+            <Line X1="0" Y1="-50" X2="-1.5" Y2="-45" Canvas.Top="0" Canvas.Left="0"  Stroke="DarkGreen" StrokeThickness="1" StrokeStartLineCap="Triangle"/>
+            <!-- Abscissa Axis -->
+            <Line X1="0" Y1="0" X2="50" Y2="0" Canvas.Top="0" Canvas.Left="0"  Stroke="DarkGreen" StrokeThickness="1" StrokeLineJoin="Miter" StrokeEndLineCap="Triangle"/>
+            <Line X1="50" Y1="0" X2="45" Y2="1.5" Canvas.Top="0" Canvas.Left="0"  Stroke="DarkGreen" StrokeThickness="1" StrokeLineJoin="Miter" StrokeStartLineCap="Triangle"/>
+            <Line X1="50" Y1="0" X2="45" Y2="-1.5" Canvas.Top="0" Canvas.Left="0"  Stroke="DarkGreen" StrokeThickness="1" StrokeLineJoin="Miter"  StrokeStartLineCap="Triangle"/>
+        </Canvas>
+    </Grid>
+</UserControl>

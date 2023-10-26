@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--The weldsection file for the sun flower welding system-->
+<wmsbase>
+  <wmslist>
+    <time>95142320</time>
+    <wms>
+      <order>0</order>
+      <vector>
+        <point id="0">0,0,0,0</point>
+        <point id="1">63121,51275,21905,0</point>
+      </vector>
+      <velocity>
+        <speed id="0">125</speed>
+        <speed id="1">25</speed>
+      </velocity>
+      <laser>
+        <power>0</power>
+        <frequency>0</frequency>
+        <duty>0</duty>
+        <rise>0</rise>
+        <fall>0</fall>
+        <air>100</air>
+        <hold>0</hold>
+        <wiretime>0</wiretime>
+        <wirespeed>0</wirespeed>
+        <wirelength>0</wirelength>
+        <wireback>0</wireback>
+      </laser>
+      <material>
+        <mindex>0</mindex>
+        <thick>0</thick>
+      </material>
+      <wire>
+        <windex>0</windex>
+        <diameter>0</diameter>
+      </wire>
+      <wobble>0</wobble>
+    </wms>
+    <wms>
+      <order>1</order>
+      <vector>
+        <point id="0">63121,51275,21905,0</point>
+        <point id="1">73457,51275,21905,20538.6</point>
+      </vector>
+      <velocity>
+        <speed id="0">6.25</speed>
+        <speed id="1">6.25</speed>
+      </velocity>
+      <laser>
+        <power>600</power>
+        <frequency>0</frequency>
+        <duty>0</duty>
+        <rise>0</rise>
+        <fall>0</fall>
+        <air>100</air>
+        <hold>0</hold>
+        <wiretime>0</wiretime>
+        <wirespeed>0</wirespeed>
+        <wirelength>0</wirelength>
+        <wireback>0</wireback>
+      </laser>
+      <material>
+        <mindex>1</mindex>
+        <thick>0</thick>
+      </material>
+      <wire>
+        <windex>0</windex>
+        <diameter>1.2</diameter>
+      </wire>
+      <wobble>0</wobble>
+    </wms>
+    <wms>
+      <order>2</order>
+      <vector>
+        <point id="0">73457,51275,21905,20538.6</point>
+        <point id="1">0,0,0,0</point>
+      </vector>
+      <velocity>
+        <speed id="0">125</speed>
+        <speed id="1">125</speed>
+      </velocity>
+      <laser>
+        <power>0</power>
+        <frequency>0</frequency>
+        <duty>0</duty>
+        <rise>0</rise>
+        <fall>0</fall>
+        <air>100</air>
+        <hold>0</hold>
+        <wiretime>0</wiretime>
+        <wirespeed>0</wirespeed>
+        <wirelength>0</wirelength>
+        <wireback>0</wireback>
+      </laser>
+      <material>
+        <mindex>0</mindex>
+        <thick>0</thick>
+      </material>
+      <wire>
+        <windex>0</windex>
+        <diameter>0</diameter>
+      </wire>
+      <wobble>0</wobble>
+    </wms>
+  </wmslist>
+</wmsbase>
