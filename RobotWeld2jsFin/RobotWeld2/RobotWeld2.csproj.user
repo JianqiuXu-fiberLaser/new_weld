@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CalibrateMachineDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FreeCurve.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="InputSpiral.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Intersect.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Intersect3D.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ManualOperation.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="PointList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="SpiralTrace.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="StageTrace.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ToggleButtonLaser.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ToggleButtonPoint.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="TopTrace.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="TraceCanvas.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WeldPlatform.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WeldPlatformIntersect.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WeldPlatformSpiral.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WeldPlatformStage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WeldVedio.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="CalibrateMachineDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FreeCurve.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="InputSpiral.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Intersect.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Intersect3D.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ManualOperation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PointList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SpiralTrace.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="StageTrace.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ToggleButtonLaser.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ToggleButtonPoint.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TopTrace.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TraceCanvas.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WeldPlatform.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WeldPlatformIntersect.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WeldPlatformSpiral.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WeldPlatformStage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WeldVedio.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

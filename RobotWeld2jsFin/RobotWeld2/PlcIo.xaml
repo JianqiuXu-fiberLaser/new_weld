@@ -1,0 +1,662 @@
+﻿<UserControl x:Class="RobotWeld2.PlcIo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RobotWeld2"
+             xmlns:vm="clr-namespace:RobotWeld2.ViewModel"
+             mc:Ignorable="d" Name="PlcIoWindow"
+             d:DesignHeight="720" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style x:Key="LabelM" TargetType="{x:Type Label}">
+            <Setter Property="FontFamily" Value="Microsoft YaHei UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Label}">
+                        <Label Content="{TemplateBinding Content}" FontFamily="{TemplateBinding FontFamily}" 
+                               FontSize="{TemplateBinding FontSize}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <vm:PlcIoViewModel/>
+    </UserControl.DataContext>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Input IO -->
+        <Grid Grid.Column="0">
+            <Border Background="GhostWhite" BorderBrush="Silver" BorderThickness="1"
+                    Margin="5,0,5,0" CornerRadius="5,5,5,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- the title Input -->
+                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                Orientation="Horizontal" Margin="0,0,0,0"
+                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="输入X" FontFamily="Microsoft YaHei UI" FontSize="16"
+                               Margin="5,0,0,0" VerticalAlignment="Center"
+                               Foreground="DarkRed" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <!-- the index, Column 0, Input -->
+                    <StackPanel Grid.Row="1" Grid.Column="0"
+                                Orientation="Vertical" Margin="0,0,0,0"
+                                HorizontalAlignment="Right" VerticalAlignment="Top">
+
+                        <!-- X1 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#Y0"/>
+                            <local:AlarmBox x:Name="X1" IoValue="{Binding IsAlarmX1}"/>
+                        </StackPanel>
+
+                        <!-- X2 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#Y+"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX2}"/>
+                        </StackPanel>
+
+                        <!-- X3 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#Y-"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX3}"/>
+                        </StackPanel>
+
+                        <!-- X4 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#C0"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX4}"/>
+                        </StackPanel>
+
+                        <!-- X5 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#Y轴伺服报警"/>
+                            <local:AlarmBoxRed IoValueRed="{Binding IsAlarmX5}"/>
+                        </StackPanel>
+
+                        <!-- X6 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#Y轴伺服准备"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX6}"/>
+                        </StackPanel>
+
+                        <!-- X7 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#C轴伺服报警"/>
+                            <local:AlarmBoxRed IoValueRed="{Binding IsAlarmX7}"/>
+                        </StackPanel>
+
+                        <!-- X8 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#C轴伺服准备"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX8}"/>
+                        </StackPanel>
+
+                        <!-- X9 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#压紧原点位"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX9}"/>
+                        </StackPanel>
+
+                        <!-- X10 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#压紧动点位"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX10}"/>
+                        </StackPanel>
+
+                        <!-- X11 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#定位原点位"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX11}"/>
+                        </StackPanel>
+
+                        <!-- X12 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#定位动点位"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX12}"/>
+                        </StackPanel>
+
+                        <!-- X13 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#顶料原点位"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX13}"/>
+                        </StackPanel>
+
+                        <!-- X14 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#急停"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX14}"/>
+                        </StackPanel>
+
+                        <!-- X15 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#暂停"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX15}"/>
+                        </StackPanel>
+
+                        <!-- X16 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#复位"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX16}"/>
+                        </StackPanel>
+
+                        <!-- X17 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#启动"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX17}"/>
+                        </StackPanel>
+
+                        <!-- X18 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#焊接应答"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX18}"/>
+                        </StackPanel>
+
+                        <!-- X19 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#焊接完成"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX19}"/>
+                        </StackPanel>
+
+                        <!-- X20 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="2#焊接应答"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX20}"/>
+                        </StackPanel>
+
+                        <!-- X21 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="2#焊接完成"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmX21}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- The 2nd Column of Input IO -->
+                    <StackPanel Grid.Row="1" Grid.Column="1"
+                                    Orientation="Vertical" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Top">
+
+
+                        <!-- X22 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX22}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#Y0"/>
+                        </StackPanel>
+
+                        <!-- X23 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX23}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#Y+"/>
+                        </StackPanel>
+
+                        <!-- X24 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX24}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#Y-"/>
+                        </StackPanel>
+
+                        <!-- X25 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX25}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#C0"/>
+                        </StackPanel>
+
+                        <!-- X26 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRightRed IoValueRRed="{Binding IsAlarmX26}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#Y轴伺服报警"/>
+                        </StackPanel>
+
+                        <!-- X27 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX27}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#Y轴伺服准备"/>
+                        </StackPanel>
+
+                        <!-- X28 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRightRed IoValueRRed="{Binding IsAlarmX28}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#C轴伺服报警"/>
+                        </StackPanel>
+
+                        <!-- X29 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX29}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#C轴伺服准备"/>
+                        </StackPanel>
+
+                        <!-- X30 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX30}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#压紧原点位"/>
+                        </StackPanel>
+
+                        <!-- X31 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX31}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#压紧动点位"/>
+                        </StackPanel>
+
+                        <!-- X32 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX32}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#定位原点位"/>
+                        </StackPanel>
+
+                        <!-- X33 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX33}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#定位动点位"/>
+                        </StackPanel>
+
+                        <!-- X34 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX34}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#顶料原点位"/>
+                        </StackPanel>
+
+                        <!-- X35 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX35}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#急停SW"/>
+                        </StackPanel>
+
+                        <!-- X36 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX36}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#暂停SW"/>
+                        </StackPanel>
+
+                        <!-- X37 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX37}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#复位SW"/>
+                        </StackPanel>
+
+                        <!-- X38 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmX38}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#启动SW"/>
+                        </StackPanel>
+
+                        <!-- X39 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRightRed IoValueRRed="{Binding IsAlarmX39}"/>
+                            <Label Style="{StaticResource LabelM}" Content="激光报警"/>
+                        </StackPanel>
+
+                        <!-- X40 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRightRed IoValueRRed="{Binding IsAlarmX40}"/>
+                            <Label Style="{StaticResource LabelM}" Content="制冷机报警"/>
+                        </StackPanel>
+
+                        <!-- X41 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRightRed IoValueRRed="{Binding IsAlarmX41}"/>
+                            <Label Style="{StaticResource LabelM}" Content="气压报警"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Output IO -->
+        <Grid Grid.Column="1">
+            <Border Background="GhostWhite" BorderBrush="Silver" BorderThickness="1"
+                    Margin="5,0,5,0" CornerRadius="5,5,5,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- the title output -->
+                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                Orientation="Horizontal" Margin="0,0,0,0"
+                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="输入X" FontFamily="Microsoft YaHei UI" FontSize="16"
+                               Margin="5,0,0,0" VerticalAlignment="Center"
+                               Foreground="DarkRed" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <!-- the index, Column 0, Input -->
+                    <StackPanel Grid.Row="1" Grid.Column="0"
+                                Orientation="Vertical" Margin="0,0,0,0"
+                                HorizontalAlignment="Right" VerticalAlignment="Top">
+
+                        <!-- Y1 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#Y脉冲"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY1}"/>
+                        </StackPanel>
+
+                        <!-- Y2 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#C脉冲"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY2}"/>
+                        </StackPanel>
+
+                        <!-- Y3 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="2#Y脉冲"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY3}"/>
+                        </StackPanel>
+
+                        <!-- Y4 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="2#C脉冲"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY4}"/>
+                        </StackPanel>
+
+                        <!-- Y5 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#Y方向"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY5}"/>
+                        </StackPanel>
+
+                        <!-- Y6 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#C方向"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY6}"/>
+                        </StackPanel>
+
+                        <!-- Y7 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#Y方向"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY7}"/>
+                        </StackPanel>
+
+                        <!-- Y8 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="2#C方向"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY8}"/>
+                        </StackPanel>
+
+                        <!-- Y9 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#Y轴伺服复位"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY9}"/>
+                        </StackPanel>
+
+                        <!-- Y10 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#C轴伺服复位"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY10}"/>
+                        </StackPanel>
+
+                        <!-- Y11 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="2#Y轴伺服复位"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY11}"/>
+                        </StackPanel>
+
+                        <!-- Y12 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="2#C轴伺服复位"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY12}"/>
+                        </StackPanel>
+
+                        <!-- Y13 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#压紧气缸"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY13}"/>
+                        </StackPanel>
+
+                        <!-- Y14 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#定位气缸"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY14}"/>
+                        </StackPanel>
+
+                        <!-- Y15 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="1#顶料气缸"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY15}"/>
+                        </StackPanel>
+
+                        <!-- Y16 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="2#压紧气缸"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY16}"/>
+                        </StackPanel>
+
+                        <!-- Y17 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="2#定位气缸"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY17}"/>
+                        </StackPanel>
+
+                        <!-- Y18 -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,10,0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Label Style="{StaticResource LabelM}" Content="2#顶料气缸"/>
+                            <local:AlarmBox IoValue="{Binding IsAlarmY18}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- The 2nd Column of Input IO -->
+                    <StackPanel Grid.Row="1" Grid.Column="1"
+                                    Orientation="Vertical" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                        <!-- Y19 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY19}"/>
+                            <Label Style="{StaticResource LabelM}" Content="照明"/>
+                        </StackPanel>
+
+                        <!-- Y20 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY20}"/>
+                            <Label Style="{StaticResource LabelM}" Content="激光外控"/>
+                        </StackPanel>
+
+                        <!-- Y21 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRightRed IoValueRRed="{Binding IsAlarmY21}"/>
+                            <Label Style="{StaticResource LabelM}" Content="1#报警LAMP"/>
+                        </StackPanel>
+
+                        <!-- Y22 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY22}"/>
+                            <Label Style="{StaticResource LabelM}" Content="1#待机LAMP"/>
+                        </StackPanel>
+
+                        <!-- Y23 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY23}"/>
+                            <Label Style="{StaticResource LabelM}" Content="1#运行LAMP"/>
+                        </StackPanel>
+
+                        <!-- Y24 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRightRed IoValueRRed="{Binding IsAlarmY24}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#报警LAMP"/>
+                        </StackPanel>
+
+                        <!-- Y25 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY25}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#待机LAMP"/>
+                        </StackPanel>
+
+                        <!-- Y26 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY26}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#运行LAMP"/>
+                        </StackPanel>
+
+                        <!-- Y27 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY27}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#待机LAMP"/>
+                        </StackPanel>
+
+                        <!-- Y28 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY28}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#运行LAMP"/>
+                        </StackPanel>
+
+                        <!-- Y29 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY29}"/>
+                            <Label Style="{StaticResource LabelM}" Content="1#焊接请求"/>
+                        </StackPanel>
+
+                        <!-- Y30 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY30}"/>
+                            <Label Style="{StaticResource LabelM}" Content="1#焊接完成"/>
+                        </StackPanel>
+
+                        <!-- Y31 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY31}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#焊接请求"/>
+                        </StackPanel>
+
+                        <!-- Y32 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY32}"/>
+                            <Label Style="{StaticResource LabelM}" Content="2#焊接完成"/>
+                        </StackPanel>
+
+                        <!-- Y33 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY33}"/>
+                            <Label Style="{StaticResource LabelM}" Content="停止"/>
+                        </StackPanel>
+
+                        <!-- Y34 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY34}"/>
+                            <Label Style="{StaticResource LabelM}" Content="急停"/>
+                        </StackPanel>
+
+                        <!-- Y35 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRightRed IoValueRRed="{Binding IsAlarmY35}"/>
+                            <Label Style="{StaticResource LabelM}" Content="红灯"/>
+                        </StackPanel>
+
+                        <!-- Y36 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxYellowRight IoValueRYellow="{Binding IsAlarmY36}"/>
+                            <Label Style="{StaticResource LabelM}" Content="黄灯"/>
+                        </StackPanel>
+
+                        <!-- Y37 -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <local:AlarmBoxRight IoValueR="{Binding IsAlarmY37}"/>
+                            <Label Style="{StaticResource LabelM}" Content="绿灯"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

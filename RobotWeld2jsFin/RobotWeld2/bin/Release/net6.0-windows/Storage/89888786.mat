@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--The record file for the sun flower welding system-->
+<Material>
+  <material>
+    <type>0</type>
+    <thickness>0</thickness>
+    <wire>0</wire>
+  </material>
+</Material>

@@ -1,0 +1,56 @@
+﻿<Window x:Class="RobotWeld2.InputSpiral"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RobotWeld2"
+        xmlns:vm="clr-namespace:RobotWeld2.ViewModel"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" Background="Transparent"
+        Title="螺旋线参数" Height="240" Width="450" ResizeMode="NoResize"
+        Icon="/Images/sunflower.ico">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.DataContext>
+        <vm:SpiralViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <Border Grid.Row="0" Background="MidnightBlue" BorderBrush="DarkGray" BorderThickness="1" Opacity="0.95" Margin="0,5,0,0" CornerRadius="10,10,10,10">
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="螺旋线焊接参数"  FontFamily="MicroSoft YaHei UI" FontSize="16" Foreground="White"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Input parameter -->
+        <Grid Grid.Row="1" Background="#7D5F9EA0" Margin="0,5,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="螺距" FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+                <TextBox Name="Pitch" Text="{Binding Path=Pitch, Mode=TwoWay, StringFormat={}{0:F2}}" FontFamily="MicroSoft YaHei UI" FontSize="16" Width="75" Background="White" Padding="0,3,0,0" InputMethod.IsInputMethodEnabled="False" GotFocus="Pitch_GotFocus" PreviewMouseLeftButtonDown="Pitch_PreviewMouseLeftButtonDown" KeyDown="Pitch_KeyDown"/>
+                <Label Content="毫米" FontFamily="MicroSoft YaHei UI" FontSize="16" Margin="10,0,10,0"/>
+            </StackPanel>
+        </Grid>
+        
+        <!-- Buttons -->
+        <Canvas Grid.Row="2" Background="#D3D3D3" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Canvas.Right="25" Canvas.Bottom="25" Orientation="Horizontal">
+                <Button Content="确认" Width="75" Margin="0,0,5,0" Background="White" Click="CancelButton_Click" FontSize="16"/>
+                <Button Content="保存" Width="75" Margin="0,0,5,0" Background="White" Click="OkButton_Click" FontSize="16"/>
+            </StackPanel>
+        </Canvas>
+    </Grid>
+</Window>
